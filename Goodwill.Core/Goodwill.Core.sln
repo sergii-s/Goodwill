@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goodwill.Core", "Goodwill.Core\Goodwill.Core.csproj", "{595D1288-EDE9-468E-87C8-7710FB1868D2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{035627E9-826A-4040-B856-41C9C3DD7F58}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{595D1288-EDE9-468E-87C8-7710FB1868D2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{595D1288-EDE9-468E-87C8-7710FB1868D2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{595D1288-EDE9-468E-87C8-7710FB1868D2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{595D1288-EDE9-468E-87C8-7710FB1868D2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{035627E9-826A-4040-B856-41C9C3DD7F58}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{035627E9-826A-4040-B856-41C9C3DD7F58}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{035627E9-826A-4040-B856-41C9C3DD7F58}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{035627E9-826A-4040-B856-41C9C3DD7F58}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,10 @@
+C:\Dev\Unity\Goodwill.Core\UnitTests\bin\Debug\xunit.execution.desktop.dll
+C:\Dev\Unity\Goodwill.Core\UnitTests\bin\Debug\UnitTests.dll
+C:\Dev\Unity\Goodwill.Core\UnitTests\bin\Debug\UnitTests.pdb
+C:\Dev\Unity\Goodwill.Core\UnitTests\bin\Debug\NFluent.dll
+C:\Dev\Unity\Goodwill.Core\UnitTests\bin\Debug\NFluent.xml
+C:\Dev\Unity\Goodwill.Core\UnitTests\obj\Debug\UnitTests.csprojResolveAssemblyReference.cache
+C:\Dev\Unity\Goodwill.Core\UnitTests\obj\Debug\UnitTests.dll
+C:\Dev\Unity\Goodwill.Core\UnitTests\obj\Debug\UnitTests.pdb
+C:\Dev\Unity\Goodwill.Core\UnitTests\bin\Debug\xunit.dll
+C:\Dev\Unity\Goodwill.Core\UnitTests\bin\Debug\xunit.xml

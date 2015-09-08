@@ -1,0 +1,4 @@
+C:\Dev\Unity\Goodwill.Core\Goodwill.Core\bin\Debug\Goodwill.Core.dll
+C:\Dev\Unity\Goodwill.Core\Goodwill.Core\bin\Debug\Goodwill.Core.pdb
+C:\Dev\Unity\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.dll
+C:\Dev\Unity\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.pdb
