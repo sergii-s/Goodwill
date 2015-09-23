@@ -47,10 +47,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Deck.cs" />
+    <Compile Include="Extentions.cs" />
+    <Compile Include="GameInitializer.cs" />
     <Compile Include="GameTests.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="DefaultGameParameters.cs" />
     <Compile Include="Goodwill.cs" />
+    <Compile Include="IGameInitializer.cs" />
     <Compile Include="IGameParameters.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

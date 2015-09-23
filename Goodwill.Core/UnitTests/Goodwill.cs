@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 
 namespace UnitTests
 {
-    public class Goodwill
+    public class Goodwill : IGoodwill
     {
-        private readonly List<Company> _companies = new List<Company>();
+        private readonly IGameInitializer _initializer = new GameInitializer();
         private readonly IGameParameters _config;
-        private readonly List<Player> _players = new List<Player>();
 
         public Goodwill()
             : this(new DefaultGameParameters())
@@ -20,15 +19,9 @@ namespace UnitTests
             _config = config;
         }
 
-        public List<Company> Companies
-        {
-            get { return _companies; }
-        }
+        public List<Company> Companies { get; } = new List<Company>();
 
-        public List<Player> Players
-        {
-            get { return _players; }
-        }
+        public List<Player> Players { get; } = new List<Player>();
 
         public Player AddPlayer(string playerName)
         {
@@ -36,95 +29,46 @@ namespace UnitTests
             {
                 Name = playerName
             };
-            _players.Add(newPlayer);
+            Players.Add(newPlayer);
 
             return newPlayer;
         }
 
         public void Start()
         {
-            InitializeCompanies();
-            InitializeMarketPart();
-            InitializePlayers();
-            DistributeActions();
+            if (Players.Count < 2)
+            {
+                throw new Exception("Should be at least 2 players");
+            }
+            _initializer.InitializeGame(this, _config);
         }
 
-        private void DistributeActions()
+        public GameInfo GetGameInfo()
         {
-            var totalActions = _config.ActionsByCompany * _config.Companies.Length;
-            var actionsByPlayer = totalActions / _players.Count;
-            var actionsLeft = totalActions - actionsByPlayer * _players.Count;
-
-            var allActions = _companies.SelectMany(x => x.Actions).Shuffle().ToList();
-
-            foreach (Player player in _players)
-            {
-                player.Actions = allActions.Take(actionsByPlayer).ToList();
-            }
+            throw new NotImplementedException();
         }
 
-        private void InitializePlayers()
+        public void SetPrice(string player, string company, int price)
         {
-            foreach (Player player in _players)
-            {
-                player.Money = _config.InitialPlayerMoney;
-            }
+            throw new NotImplementedException();
         }
 
-        private void InitializeCompanies()
+        public void VoteManager(string player, string company, string manager)
         {
-            foreach (string companyName in _config.Companies)
-            {
-                var company = new Company
-                {
-                    Name = companyName,
-                    Money = _config.InitialCompanyMoney,
-                    Actions = new List<CompanyAction>()
-                };
-                for (int i = 0; i < _config.ActionsByCompany; i++)
-                {
-                    company.Actions.Add(new CompanyAction
-                    {
-                        Company = company
-                    });
-                }
-                _companies.Add(company);
-            }
-        }
-
-        private void InitializeMarketPart()
-        {
-            const int total = 100;
-            var parts = total / _config.MarketPartDivider;
-            var partsByCompany = parts / Companies.Count;
-            var partsLeft = parts - (partsByCompany * Companies.Count);
-
-            var ctr = 0;
-            foreach (Company company in Companies)
-            {
-                company.MarketPart = _config.MarketPartDivider * partsByCompany;
-                if (partsLeft != 0)
-                {
-                    if (ctr < partsLeft)
-                    {
-                        company.MarketPart += _config.MarketPartDivider;
-                    }
-                    else
-                    {
-                        company.Money += _config.BonusCompanyMoneyPerMarketPart;
-                    }
-                }
-                ctr++;
-            }
+            throw new NotImplementedException();
         }
     }
 
-    public static class Extentions
+    public interface IGoodwill
     {
-        public static IEnumerable<T> Shuffle<T>(this IEnumerable<T> items)
-        {
-            var rnd = new Random((int) DateTime.Now.Ticks);
-            return items.OrderBy(item => rnd.Next());
-        }
+        Player AddPlayer(string playerName);
+        void Start();
+        GameInfo GetGameInfo();
+        void SetPrice(string player, string company, int price);
+        void VoteManager(string player, string company, string manager);
+    }
+
+    public class GameInfo
+    {
     }
 }

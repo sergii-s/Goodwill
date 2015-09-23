@@ -7,7 +7,7 @@ namespace UnitTests
         int InitialCompanyMoney { get; }
         int BonusCompanyMoneyPerMarketPart { get; }
         int InitialPlayerMoney { get; }
-        int BonusPlayerMoneyPerAction { get; }
+        int BonusPlayerMoneyPerMissingAction { get; }
         int ActionsByCompany { get; }
         int MarketPartDivider { get; }
         string[] Companies { get; }
