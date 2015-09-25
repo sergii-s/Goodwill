@@ -86,12 +86,12 @@ namespace UnitTests
             var ctr = 0;
             foreach (Company company in _goodwill.Companies)
             {
-                company.MarketPart = _config.MarketPartDivider * partsByCompany;
+                company.MarketShare = _config.MarketPartDivider * partsByCompany;
                 if (partsLeft != 0)
                 {
                     if (ctr < partsLeft)
                     {
-                        company.MarketPart += _config.MarketPartDivider;
+                        company.MarketShare += _config.MarketPartDivider;
                     }
                     else
                     {

@@ -47,20 +47,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Deck.cs" />
-    <Compile Include="Extentions.cs" />
-    <Compile Include="GameInitializer.cs" />
     <Compile Include="GameTests.cs" />
-    <Compile Include="Company.cs" />
-    <Compile Include="DefaultGameParameters.cs" />
-    <Compile Include="Goodwill.cs" />
-    <Compile Include="IGameInitializer.cs" />
-    <Compile Include="IGameParameters.cs" />
-    <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Goodwill.Core\Goodwill.Core.csproj">
+      <Project>{595D1288-EDE9-468E-87C8-7710FB1868D2}</Project>
+      <Name>Goodwill.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

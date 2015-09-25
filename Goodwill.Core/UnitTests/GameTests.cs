@@ -16,9 +16,9 @@ namespace UnitTests
             var player3 = game.AddPlayer("Player 3");
 
             game.Start();
-            
+
             Check.That(game.Companies.Extracting("Name")).ContainsExactly(defaultGameParameters.Companies);
-            Check.That(game.Companies.Extracting("MarketPart")).ContainsExactly(35, 35, 30);
+            Check.That(game.Companies.Extracting("MarketShare")).ContainsExactly(35, 35, 30);
             Check.That(game.Companies.Extracting("Money")).ContainsExactly(100, 100, 110);
             Check.That(player1.Money).IsEqualTo(20);
             Check.That(player1.Actions.Count).IsEqualTo(10);
@@ -41,9 +41,9 @@ namespace UnitTests
 
             game.Start();
 
-            
+
             Check.That(game.Companies.Extracting("Name")).ContainsExactly(defaultGameParameters.Companies);
-            Check.That(game.Companies.Extracting("MarketPart")).ContainsExactly(35, 35, 30);
+            Check.That(game.Companies.Extracting("MarketShare")).ContainsExactly(35, 35, 30);
             Check.That(game.Companies.Extracting("Money")).ContainsExactly(100, 100, 110);
 
             foreach (var player in game.Players)
@@ -59,8 +59,34 @@ namespace UnitTests
                     Check.That(player.Actions.Count).IsEqualTo(7);
                 }
             }
-            
-            Check.That(game.Players.SelectMany(x=>x.Actions)).HasSize(30);
+
+            Check.That(game.Players.SelectMany(x => x.Actions)).HasSize(30);
+        }
+
+        [Fact]
+        public void Profit_calculation()
+        {
+            var game = new Goodwill();
+            game.AddPlayer("Player 1");
+            game.AddPlayer("Player 2");
+            game.AddPlayer("Player 3");
+            game.AddPlayer("Player 4");
+            game.Start();
+
+            var gameInfo1 = game.GetGameInfo();
+            Check.That(gameInfo1.CurrentYear).IsEqualTo(1);
+            Check.That(gameInfo1.TotalYears).IsEqualTo(6);
+            Check.That(gameInfo1.Companies["Mercury"].Money).IsEqualTo(100);
+            Check.That(gameInfo1.Companies["Mercury"].MarketShare).IsEqualTo(35);
+            Check.That(gameInfo1.Companies["Jupiter"].Money).IsEqualTo(110);
+            Check.That(gameInfo1.Companies["Jupiter"].MarketShare).IsEqualTo(30);
+            Check.That(gameInfo1.Companies["Athena"].Money).IsEqualTo(100);
+            Check.That(gameInfo1.Companies["Athena"].MarketShare).IsEqualTo(35);
+
+            game.FinishYear();
+            var gameInfo2 = game.GetGameInfo();
+            Check.That(gameInfo2.CurrentYear).IsEqualTo(2);
+            Check.That(gameInfo2.TotalYears).IsEqualTo(6);
         }
     }
 }

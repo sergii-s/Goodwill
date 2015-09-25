@@ -11,5 +11,6 @@ namespace UnitTests
         int ActionsByCompany { get; }
         int MarketPartDivider { get; }
         string[] Companies { get; }
+        int Years{ get; }
     }
 }
