@@ -11,10 +11,16 @@ namespace UnitTests
             ActionsByCompany = 10;
             MarketPartDivider = 5;
             Years = 6;
-            Companies = new[] {"Athena", "Mercury", "Jupiter"};
+            Companies = new[] { "Athena", "Mercury", "Jupiter" };
+            MoneyByMarketPart = 1;
+            Ressources = new[] { RessourceInfo.Coal, RessourceInfo.Fuel, RessourceInfo.Employee };
+            InitialRessourcePrice = 5;
         }
 
         public int Years { get; }
+        public int MoneyByMarketPart { get; }
+        public RessourceInfo[] Ressources { get; }
+        public int InitialRessourcePrice { get; }
         public int InitialCompanyMoney { get; }
         public int BonusCompanyMoneyPerMarketPart { get; }
         public int InitialPlayerMoney { get; }

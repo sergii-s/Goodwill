@@ -1,9 +1,10 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace UnitTests
 {
-    class GameInitializer : IGameInitializer
+    public class GameInitializer : IGameInitializer
     {
         private IGameParameters _config;
         private Goodwill _goodwill;
@@ -13,9 +14,18 @@ namespace UnitTests
             _config = config;
             _goodwill = goodwill;
             InitializeCompanies();
+            InitializeRessources();
             InitializeMarketPart();
             InitializePlayers();
             DistributeActions();
+        }
+
+        private void InitializeRessources()
+        {
+            foreach (var ressource in _config.Ressources)
+            {
+                _goodwill.RessourcePrices[ressource] = _config.InitialRessourcePrice;
+            }
         }
 
         private void DistributeActions()
@@ -63,6 +73,7 @@ namespace UnitTests
                 {
                     Name = companyName,
                     Money = _config.InitialCompanyMoney,
+                    RessourceDependencies = GenerateRessorceDependencies(),
                     Actions = new List<CompanyAction>()
                 };
                 for (var i = 0; i < _config.ActionsByCompany; i++)
@@ -74,6 +85,12 @@ namespace UnitTests
                 }
                 _goodwill.Companies.Add(company);
             }
+        }
+
+        protected virtual List<RessourceInfo> GenerateRessorceDependencies()
+        {
+            var ressourceInfos = Enum.GetValues(typeof (RessourceInfo)).Cast<RessourceInfo>().ToList();
+            return ressourceInfos.GenerateRandom(3).ToList();
         }
 
         private void InitializeMarketPart()

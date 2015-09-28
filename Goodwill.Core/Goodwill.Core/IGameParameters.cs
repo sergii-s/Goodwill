@@ -12,5 +12,8 @@ namespace UnitTests
         int MarketPartDivider { get; }
         string[] Companies { get; }
         int Years{ get; }
+        int MoneyByMarketPart { get; }
+        RessourceInfo[] Ressources { get; }
+        int InitialRessourcePrice { get; }
     }
 }

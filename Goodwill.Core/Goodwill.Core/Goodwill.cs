@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -8,23 +9,26 @@ namespace UnitTests
 {
     public class Goodwill : IGoodwill
     {
-        private readonly IGameInitializer _initializer = new GameInitializer();
         private readonly IGameParameters _config;
+        private readonly IGameInitializer _gameInitializer;
         private int _currentYear = 1;
 
         public Goodwill()
-            : this(new DefaultGameParameters())
+            : this(new DefaultGameParameters(), new GameInitializer())
         {
         }
 
-        public Goodwill(IGameParameters config)
+        public Goodwill(IGameParameters config, IGameInitializer gameInitializer)
         {
             _config = config;
+            _gameInitializer = gameInitializer;
         }
 
         public List<Company> Companies { get; } = new List<Company>();
 
         public List<Player> Players { get; } = new List<Player>();
+
+        public IDictionary<RessourceInfo, int> RessourcePrices { get; } = new Dictionary<RessourceInfo, int>();
 
         public Player AddPlayer(string playerName)
         {
@@ -43,7 +47,7 @@ namespace UnitTests
             {
                 throw new Exception("Should be at least 2 players");
             }
-            _initializer.InitializeGame(this, _config);
+            _gameInitializer.InitializeGame(this, _config);
         }
 
         public GameInfo GetGameInfo()
@@ -56,8 +60,8 @@ namespace UnitTests
                 {
                     Name = x.Name,
                     Money = x.Money,
-                    MarketShare = x.MarketShare
-
+                    MarketShare = x.MarketShare,
+                    RessourceDependencies = x.RessourceDependencies
                 }).ToDictionary(x => x.Name, x => x)
             };
         }
@@ -74,7 +78,22 @@ namespace UnitTests
 
         public void FinishYear()
         {
+            ApplicateEvents();
+            CalculateMoney();
             _currentYear++;
+        }
+
+        private void CalculateMoney()
+        {
+            foreach (var company in Companies)
+            {
+                var income = company.MarketShare * _config.MoneyByMarketPart;
+                var outcome = company.Manager.Bonus + company.RessourceDependencies.Sum(x => RessourcePrices[x]);
+            }
+        }
+
+        private void ApplicateEvents()
+        {
         }
     }
 
@@ -103,8 +122,9 @@ namespace UnitTests
         public List<RessourceInfo> RessourceDependencies { get; set; }
     }
 
-    public class RessourceInfo
+    public enum RessourceInfo
     {
+        Coal, Fuel, Employee
     }
 
     public class ManagerInfo
