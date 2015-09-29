@@ -3,6 +3,8 @@ using System.Linq;
 using NFluent;
 using Xunit;
 
+-- C'est bien de mettre des tests. Je vais essayer de comprendre.
+
 namespace UnitTests
 {
     public class GameTests
