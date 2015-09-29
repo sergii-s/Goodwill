@@ -1,6 +1,7 @@
 using System.Collections.Generic;
+using Goodwill.Core.Events;
 
-namespace UnitTests
+namespace Goodwill.Core
 {
     public class Player
     {
@@ -9,6 +10,7 @@ namespace UnitTests
         public int Money { get; set; }
 
         public List<CompanyAction> Actions { get; set; }
+        public List<GameEvent> Events { get; set; }
     }
 
     public class CompanyAction

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using Microsoft.SqlServer.Server;
 
-namespace UnitTests
+namespace Goodwill.Core
 {
     public class Company
     {
@@ -15,7 +14,13 @@ namespace UnitTests
 
     public class Manager
     {
-        public string Name { get; set; }
-        public int Bonus { get; set; }
+        public Manager(string name, int bonus)
+        {
+            Name = name;
+            Bonus = bonus;
+        }
+
+        public string Name { get;}
+        public int Bonus { get; }
     }
 }

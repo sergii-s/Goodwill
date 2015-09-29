@@ -2,17 +2,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace UnitTests
+namespace Goodwill.Core
 {
     public class GameInitializer : IGameInitializer
     {
-        private IGameParameters _config;
-        private Goodwill _goodwill;
+        protected IGameParameters Config;
+        protected Goodwill Goodwill;
 
         public void InitializeGame(Goodwill goodwill, IGameParameters config)
         {
-            _config = config;
-            _goodwill = goodwill;
+            Config = config;
+            Goodwill = goodwill;
+            IntitializeManagers();
             InitializeCompanies();
             InitializeRessources();
             InitializeMarketPart();
@@ -20,30 +21,38 @@ namespace UnitTests
             DistributeActions();
         }
 
+        protected virtual void IntitializeManagers()
+        {
+            foreach (var manager in Config.Managers.Shuffle())
+            {
+                Goodwill.Managers.Enqueue(manager);
+            }
+        }
+
         private void InitializeRessources()
         {
-            foreach (var ressource in _config.Ressources)
+            foreach (var ressource in Config.Ressources)
             {
-                _goodwill.RessourcePrices[ressource] = _config.InitialRessourcePrice;
+                Goodwill.RessourcePrices[ressource] = Config.InitialRessourcePrice;
             }
         }
 
         private void DistributeActions()
         {
-            var totalActions = _config.ActionsByCompany * _config.Companies.Length;
-            var actionsByPlayer = totalActions / _goodwill.Players.Count;
-            var actionsLeft = totalActions - actionsByPlayer * _goodwill.Players.Count;
+            var totalActions = Config.ActionsByCompany * Config.Companies.Length;
+            var actionsByPlayer = totalActions / Goodwill.Players.Count;
+            var actionsLeft = totalActions - actionsByPlayer * Goodwill.Players.Count;
 
-            var allActions = _goodwill.Companies.SelectMany(x => x.Actions).Shuffle();
+            var allActions = Goodwill.Companies.SelectMany(x => x.Actions).Shuffle();
 
-            foreach (var player in _goodwill.Players)
+            foreach (var player in Goodwill.Players)
             {
                 player.Actions = allActions.Pick(actionsByPlayer);
             }
 
             if (actionsLeft == 0) return;
 
-            foreach (var player in _goodwill.Players.Shuffle())
+            foreach (var player in Goodwill.Players.Shuffle())
             {
                 if (actionsLeft != 0)
                 {
@@ -52,38 +61,39 @@ namespace UnitTests
                 }
                 else
                 {
-                    player.Money += _config.BonusPlayerMoneyPerMissingAction;
+                    player.Money += Config.BonusPlayerMoneyPerMissingAction;
                 }
             }
         }
 
         private void InitializePlayers()
         {
-            foreach (Player player in _goodwill.Players)
+            foreach (Player player in Goodwill.Players)
             {
-                player.Money = _config.InitialPlayerMoney;
+                player.Money = Config.InitialPlayerMoney;
             }
         }
 
         private void InitializeCompanies()
         {
-            foreach (string companyName in _config.Companies)
+            foreach (string companyName in Config.Companies)
             {
                 var company = new Company
                 {
                     Name = companyName,
-                    Money = _config.InitialCompanyMoney,
+                    Money = Config.InitialCompanyMoney,
                     RessourceDependencies = GenerateRessorceDependencies(),
-                    Actions = new List<CompanyAction>()
+                    Actions = new List<CompanyAction>(),
+                    Manager = Goodwill.Managers.Pick()
                 };
-                for (var i = 0; i < _config.ActionsByCompany; i++)
+                for (var i = 0; i < Config.ActionsByCompany; i++)
                 {
                     company.Actions.Add(new CompanyAction
                     {
                         Company = company
                     });
                 }
-                _goodwill.Companies.Add(company);
+                Goodwill.Companies.Add(company);
             }
         }
 
@@ -96,23 +106,23 @@ namespace UnitTests
         private void InitializeMarketPart()
         {
             const int total = 100;
-            var parts = total / _config.MarketPartDivider;
-            var partsByCompany = parts / _goodwill.Companies.Count;
-            var partsLeft = parts - (partsByCompany * _goodwill.Companies.Count);
+            var parts = total / Config.MarketPartDivider;
+            var partsByCompany = parts / Goodwill.Companies.Count;
+            var partsLeft = parts - (partsByCompany * Goodwill.Companies.Count);
 
             var ctr = 0;
-            foreach (Company company in _goodwill.Companies)
+            foreach (Company company in Goodwill.Companies)
             {
-                company.MarketShare = _config.MarketPartDivider * partsByCompany;
+                company.MarketShare = Config.MarketPartDivider * partsByCompany;
                 if (partsLeft != 0)
                 {
                     if (ctr < partsLeft)
                     {
-                        company.MarketShare += _config.MarketPartDivider;
+                        company.MarketShare += Config.MarketPartDivider;
                     }
                     else
                     {
-                        company.Money += _config.BonusCompanyMoneyPerMarketPart;
+                        company.Money += Config.BonusCompanyMoneyPerMarketPart;
                     }
                 }
                 ctr++;

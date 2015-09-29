@@ -1,4 +1,4 @@
-namespace UnitTests
+namespace Goodwill.Core
 {
     public interface IGameInitializer
     {

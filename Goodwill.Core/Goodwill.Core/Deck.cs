@@ -1,9 +1,13 @@
 using System.Collections.Generic;
 
-namespace UnitTests
+namespace Goodwill.Core
 {
     public class Deck<T> : Queue<T>
     {
+        public Deck()
+        {
+        }
+
         public Deck(IEnumerable<T> enumerable) : base(enumerable)
         {
         }

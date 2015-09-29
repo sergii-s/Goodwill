@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
 
-namespace UnitTests
+namespace Goodwill.Core
 {
     public class Goodwill : IGoodwill
     {
@@ -28,7 +25,10 @@ namespace UnitTests
 
         public List<Player> Players { get; } = new List<Player>();
 
+        public Deck<Manager> Managers { get; } = new Deck<Manager>();
+
         public IDictionary<RessourceInfo, int> RessourcePrices { get; } = new Dictionary<RessourceInfo, int>();
+        
 
         public Player AddPlayer(string playerName)
         {
@@ -89,11 +89,14 @@ namespace UnitTests
             {
                 var income = company.MarketShare * _config.MoneyByMarketPart;
                 var outcome = company.Manager.Bonus + company.RessourceDependencies.Sum(x => RessourcePrices[x]);
+                company.Money += income;
+                company.Money -= outcome;
             }
         }
 
         private void ApplicateEvents()
         {
+            var events = Players.SelectMany(x => x.Events);
         }
     }
 

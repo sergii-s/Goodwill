@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace UnitTests
+namespace Goodwill.Core
 {
     public interface IGameParameters
     {
@@ -15,5 +15,6 @@ namespace UnitTests
         int MoneyByMarketPart { get; }
         RessourceInfo[] Ressources { get; }
         int InitialRessourcePrice { get; }
+        List<Manager> Managers { get; }
     }
 }
