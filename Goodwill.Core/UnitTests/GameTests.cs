@@ -95,6 +95,7 @@ namespace UnitTests
             game.AddPlayer("Player 2");
             game.AddPlayer("Player 3");
             game.AddPlayer("Player 4");
+
             game.Start();
 
             var gameInfo1 = game.GetGameInfo();

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Goodwill.Core.Events;
 
 namespace Goodwill.Core
 {
@@ -16,5 +17,6 @@ namespace Goodwill.Core
         RessourceInfo[] Ressources { get; }
         int InitialRessourcePrice { get; }
         List<Manager> Managers { get; }
+        IGameEventAction[] Events { get; }
     }
 }

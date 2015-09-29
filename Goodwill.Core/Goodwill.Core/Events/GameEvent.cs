@@ -2,7 +2,7 @@
 {
     public class GameEvent
     {
-        public GameEvent(int probability, GameEventAction action)
+        public GameEvent(int probability, IGameEventAction action)
         {
             Probability = probability;
             Action = action;

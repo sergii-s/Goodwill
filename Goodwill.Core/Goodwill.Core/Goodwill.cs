@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Goodwill.Core.Events;
 
 namespace Goodwill.Core
 {
@@ -27,8 +28,10 @@ namespace Goodwill.Core
 
         public Deck<Manager> Managers { get; } = new Deck<Manager>();
 
+        public Deck<GameEvent> Events { get; set; }
+
         public IDictionary<RessourceInfo, int> RessourcePrices { get; } = new Dictionary<RessourceInfo, int>();
-        
+
 
         public Player AddPlayer(string playerName)
         {
@@ -48,6 +51,7 @@ namespace Goodwill.Core
                 throw new Exception("Should be at least 2 players");
             }
             _gameInitializer.InitializeGame(this, _config);
+            BeginYear();
         }
 
         public GameInfo GetGameInfo()
@@ -76,6 +80,20 @@ namespace Goodwill.Core
             throw new NotImplementedException();
         }
 
+        private void BeginYear()
+        {
+            Events = _config.Events.Select(x => new GameEvent(5, x)).Shuffle();
+            DistributeEvents();
+        }
+
+        private void DistributeEvents()
+        {
+            foreach (var player in Players)
+            {
+                player.Events = Events.Pick(2);
+            }
+        }
+
         public void FinishYear()
         {
             ApplicateEvents();
@@ -97,6 +115,7 @@ namespace Goodwill.Core
         private void ApplicateEvents()
         {
             var events = Players.SelectMany(x => x.Events);
+            //TODO
         }
     }
 

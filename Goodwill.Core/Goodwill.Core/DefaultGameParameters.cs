@@ -30,9 +30,20 @@ namespace Goodwill.Core
                 new Manager("x5", 0),
                 new Manager("x6", 0)
             };
-            Events = new GameEventAction[]
+            Events = new[]
             {
-                new GameEventAction(x=>x.RessourcePrices[RessourceInfo.Coal]+=5), 
+                GameEventAction.RessourcePriceMove(RessourceInfo.Coal, 5),
+                GameEventAction.RessourcePriceMove(RessourceInfo.Coal, 10),
+                GameEventAction.RessourcePriceMove(RessourceInfo.Coal, -5),
+                GameEventAction.RessourcePriceMove(RessourceInfo.Coal, -10),
+                GameEventAction.RessourcePriceMove(RessourceInfo.Fuel, 5),
+                GameEventAction.RessourcePriceMove(RessourceInfo.Fuel, 10),
+                GameEventAction.RessourcePriceMove(RessourceInfo.Fuel, -5),
+                GameEventAction.RessourcePriceMove(RessourceInfo.Fuel, -10),
+                GameEventAction.RessourcePriceMove(RessourceInfo.Employee, 5),
+                GameEventAction.RessourcePriceMove(RessourceInfo.Employee, 10),
+                GameEventAction.RessourcePriceMove(RessourceInfo.Employee, -5),
+                GameEventAction.RessourcePriceMove(RessourceInfo.Employee, -10),
             };
         }
 
@@ -48,6 +59,6 @@ namespace Goodwill.Core
         public int ActionsByCompany { get; }
         public int MarketPartDivider { get; }
         public string[] Companies { get; }
-        public GameEventAction[] Events { get; }
+        public IGameEventAction[] Events { get; }
     }
 }
