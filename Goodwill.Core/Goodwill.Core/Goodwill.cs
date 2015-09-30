@@ -66,7 +66,8 @@ namespace Goodwill.Core
                     Money = x.Money,
                     MarketShare = x.MarketShare,
                     RessourceDependencies = x.RessourceDependencies
-                }).ToDictionary(x => x.Name, x => x)
+                }).ToDictionary(x => x.Name, x => x),
+                Ressources = RessourcePrices.ToDictionary(x => x.Key, x => x.Value)
             };
         }
 
@@ -82,7 +83,7 @@ namespace Goodwill.Core
 
         private void BeginYear()
         {
-            Events = _config.Events.Select(x => new GameEvent(5, x)).Shuffle();
+            _gameInitializer.InitializeEvents(this, _config);
             DistributeEvents();
         }
 
@@ -115,7 +116,11 @@ namespace Goodwill.Core
         private void ApplicateEvents()
         {
             var events = Players.SelectMany(x => x.Events);
-            //TODO
+            var eventToApply = events.OrderBy(x => x.Probability).Take(4);
+            foreach (var gameEvent in eventToApply)
+            {
+                gameEvent.Action.Applicate(this);
+            }
         }
     }
 
@@ -133,6 +138,7 @@ namespace Goodwill.Core
         public int CurrentYear { get; set; }
         public int TotalYears { get; set; }
         public Dictionary<string, CompanyInfo> Companies { get; set; }
+        public Dictionary<RessourceInfo, int> Ressources { get; set; }
     }
 
     public class CompanyInfo

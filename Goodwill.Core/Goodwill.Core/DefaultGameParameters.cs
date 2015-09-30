@@ -18,6 +18,8 @@ namespace Goodwill.Core
             MoneyByMarketPart = 1;
             Ressources = new[] { RessourceInfo.Coal, RessourceInfo.Fuel, RessourceInfo.Employee };
             InitialRessourcePrice = 5;
+            MinRessourcePrice = 5;
+            MaxRessourcePrice = 25;
             Managers = new List<Manager>
             {
                 new Manager("Francois", 0),
@@ -50,6 +52,8 @@ namespace Goodwill.Core
         public int Years { get; }
         public int MoneyByMarketPart { get; }
         public RessourceInfo[] Ressources { get; }
+        public int MaxRessourcePrice { get; }
+        public int MinRessourcePrice { get; }
         public int InitialRessourcePrice { get; }
         public List<Manager> Managers { get; }
         public int InitialCompanyMoney { get; }

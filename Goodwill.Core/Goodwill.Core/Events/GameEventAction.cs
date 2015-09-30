@@ -6,7 +6,11 @@ namespace Goodwill.Core.Events
     {
         public static IGameEventAction RessourcePriceMove(RessourceInfo ressource, int priceChange)
         {
-            return new GameEventAction(goodwill => goodwill.RessourcePrices[ressource] += priceChange);
+            return new GameEventAction(goodwill =>
+            {
+                goodwill.Configuration
+                goodwill.RessourcePrices[ressource] += priceChange;
+            });
         }
 
         private readonly Action<Goodwill> _action;

@@ -2,3 +2,8 @@ C:\Dev\Unity\Goodwill.Core\Goodwill.Core\bin\Debug\Goodwill.Core.dll
 C:\Dev\Unity\Goodwill.Core\Goodwill.Core\bin\Debug\Goodwill.Core.pdb
 C:\Dev\Unity\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.dll
 C:\Dev\Unity\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.pdb
+C:\Development\sergii\Goodwill.Core\Goodwill.Core\bin\Debug\Goodwill.Core.dll
+C:\Development\sergii\Goodwill.Core\Goodwill.Core\bin\Debug\Goodwill.Core.pdb
+C:\Development\sergii\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.csprojResolveAssemblyReference.cache
+C:\Development\sergii\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.dll
+C:\Development\sergii\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.pdb

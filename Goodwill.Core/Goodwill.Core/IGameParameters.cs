@@ -12,9 +12,11 @@ namespace Goodwill.Core
         int ActionsByCompany { get; }
         int MarketPartDivider { get; }
         string[] Companies { get; }
-        int Years{ get; }
+        int Years { get; }
         int MoneyByMarketPart { get; }
         RessourceInfo[] Ressources { get; }
+        int MaxRessourcePrice { get; }
+        int MinRessourcePrice { get; }
         int InitialRessourcePrice { get; }
         List<Manager> Managers { get; }
         IGameEventAction[] Events { get; }

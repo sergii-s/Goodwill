@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Goodwill.Core.Events;
 
 namespace Goodwill.Core
 {
@@ -19,6 +20,11 @@ namespace Goodwill.Core
             InitializeMarketPart();
             InitializePlayers();
             DistributeActions();
+        }
+
+        public virtual void InitializeEvents(Goodwill goodwill, IGameParameters config)
+        {
+            goodwill.Events = config.Events.Select(x => new GameEvent(5, x)).Shuffle();
         }
 
         protected virtual void IntitializeManagers()
