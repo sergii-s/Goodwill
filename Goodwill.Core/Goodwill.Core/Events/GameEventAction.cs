@@ -8,8 +8,10 @@ namespace Goodwill.Core.Events
         {
             return new GameEventAction(goodwill =>
             {
-                goodwill.Configuration
-                goodwill.RessourcePrices[ressource] += priceChange;
+                var newPrice = goodwill.RessourcePrices[ressource] + priceChange;
+                newPrice = (newPrice > goodwill.Config.MaxRessourcePrice) ? goodwill.Config.MaxRessourcePrice : newPrice;
+                newPrice = (newPrice < goodwill.Config.MinRessourcePrice) ? goodwill.Config.MinRessourcePrice : newPrice;
+                goodwill.RessourcePrices[ressource] = newPrice;
             });
         }
 

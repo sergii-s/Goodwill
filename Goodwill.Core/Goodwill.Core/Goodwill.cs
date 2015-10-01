@@ -7,7 +7,7 @@ namespace Goodwill.Core
 {
     public class Goodwill : IGoodwill
     {
-        private readonly IGameParameters _config;
+        public IGameParameters Config { get; }
         private readonly IGameInitializer _gameInitializer;
         private int _currentYear = 1;
 
@@ -18,7 +18,7 @@ namespace Goodwill.Core
 
         public Goodwill(IGameParameters config, IGameInitializer gameInitializer)
         {
-            _config = config;
+            Config = config;
             _gameInitializer = gameInitializer;
         }
 
@@ -31,7 +31,7 @@ namespace Goodwill.Core
         public Deck<GameEvent> Events { get; set; }
 
         public IDictionary<RessourceInfo, int> RessourcePrices { get; } = new Dictionary<RessourceInfo, int>();
-
+        
 
         public Player AddPlayer(string playerName)
         {
@@ -50,7 +50,7 @@ namespace Goodwill.Core
             {
                 throw new Exception("Should be at least 2 players");
             }
-            _gameInitializer.InitializeGame(this, _config);
+            _gameInitializer.InitializeGame(this, Config);
             BeginYear();
         }
 
@@ -59,7 +59,7 @@ namespace Goodwill.Core
             return new GameInfo
             {
                 CurrentYear = _currentYear,
-                TotalYears = _config.Years,
+                TotalYears = Config.Years,
                 Companies = Companies.Select(x => new CompanyInfo
                 {
                     Name = x.Name,
@@ -83,7 +83,7 @@ namespace Goodwill.Core
 
         private void BeginYear()
         {
-            _gameInitializer.InitializeEvents(this, _config);
+            _gameInitializer.InitializeEvents(this, Config);
             DistributeEvents();
         }
 
@@ -106,7 +106,7 @@ namespace Goodwill.Core
         {
             foreach (var company in Companies)
             {
-                var income = company.MarketShare * _config.MoneyByMarketPart;
+                var income = company.MarketShare * Config.MoneyByMarketPart;
                 var outcome = company.Manager.Bonus + company.RessourceDependencies.Sum(x => RessourcePrices[x]);
                 company.Money += income;
                 company.Money -= outcome;
