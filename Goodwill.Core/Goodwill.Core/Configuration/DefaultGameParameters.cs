@@ -34,6 +34,7 @@ namespace Goodwill.Core
             };
             Events = new[]
             {
+                //TODO compose all events
                 GameEventAction.RessourcePriceMove(RessourceInfo.Coal, 5),
                 GameEventAction.RessourcePriceMove(RessourceInfo.Coal, 10),
                 GameEventAction.RessourcePriceMove(RessourceInfo.Coal, -5),
@@ -46,6 +47,17 @@ namespace Goodwill.Core
                 GameEventAction.RessourcePriceMove(RessourceInfo.Employee, 10),
                 GameEventAction.RessourcePriceMove(RessourceInfo.Employee, -5),
                 GameEventAction.RessourcePriceMove(RessourceInfo.Employee, -10),
+            };
+            GameParametersByPlayersCount = new Dictionary<int, IParameters>()
+            {
+                //TODO correct config
+                {2, new Parameters(4, 4, 4)},
+                {3, new Parameters(4, 4, 4)},
+                {4, new Parameters(2, 2, 4)},
+                {5, new Parameters(2, 2, 4)},
+                {6, new Parameters(2, 2, 4)},
+                {7, new Parameters(2, 2, 4)},
+                {8, new Parameters(2, 2, 4)},
             };
         }
 
@@ -64,5 +76,6 @@ namespace Goodwill.Core
         public int MarketPartDivider { get; }
         public string[] Companies { get; }
         public IGameEventAction[] Events { get; }
+        public IDictionary<int, IParameters> GameParametersByPlayersCount { get; }
     }
 }

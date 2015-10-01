@@ -139,6 +139,24 @@ namespace Goodwill.Core
         public int TotalYears { get; set; }
         public Dictionary<string, CompanyInfo> Companies { get; set; }
         public Dictionary<RessourceInfo, int> Ressources { get; set; }
+
+        public GameState State { get; set; }
+    }
+    
+    public class GameState
+    {
+    }
+
+    public class EvaluatingPriceState : GameState
+    {
+        private EvaluatingPriceState(string company)
+        {
+        }
+
+        public static GameState For(string company)
+        {
+            return new EvaluatingPriceState(company);
+        }
     }
 
     public class CompanyInfo

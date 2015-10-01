@@ -159,5 +159,20 @@ namespace UnitTests
 
             Check.That(game.RessourcePrices[RessourceInfo.Coal]).IsEqualTo(res);
         }
+
+        [Fact]
+        public void Actions_exchange()
+        {
+            var game = new Goodwill.Core.Goodwill(new DefaultGameParameters(), new TestGameInitializer());
+            game.AddPlayer("Player 1");
+            game.AddPlayer("Player 2");
+            game.AddPlayer("Player 3");
+            game.AddPlayer("Player 4");
+            game.Start();
+
+            var gameInfo = game.GetGameInfo();
+            Check.That(gameInfo.State).IsEqualTo(EvaluatingPriceState.For("Athena"));
+
+        }
     }
 }

@@ -42,7 +42,7 @@
     <Compile Include="Company.cs" />
     <Compile Include="Events\CompositAction.cs" />
     <Compile Include="Deck.cs" />
-    <Compile Include="DefaultGameParameters.cs" />
+    <Compile Include="Configuration\DefaultGameParameters.cs" />
     <Compile Include="Extentions.cs" />
     <Compile Include="Events\GameEvent.cs" />
     <Compile Include="Events\GameEventAction.cs" />
@@ -50,7 +50,7 @@
     <Compile Include="Goodwill.cs" />
     <Compile Include="Events\IGameEventAction.cs" />
     <Compile Include="IGameInitializer.cs" />
-    <Compile Include="IGameParameters.cs" />
+    <Compile Include="Configuration\IGameParameters.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
