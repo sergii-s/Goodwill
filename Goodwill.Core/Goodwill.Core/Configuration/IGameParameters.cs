@@ -20,8 +20,8 @@ namespace Goodwill.Core
         int InitialRessourcePrice { get; }
         List<Manager> Managers { get; }
         IGameEventAction[] Events { get; }
-
         IDictionary<int, IParameters> GameParametersByPlayersCount { get; }
+        IDictionary<int, string[]> CompanyEvaluatingOrderByYear { get; }
     }
 
     public interface IParameters

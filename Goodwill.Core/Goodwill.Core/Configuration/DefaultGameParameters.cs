@@ -59,6 +59,17 @@ namespace Goodwill.Core
                 {7, new Parameters(2, 2, 4)},
                 {8, new Parameters(2, 2, 4)},
             };
+            CompanyEvaluatingOrderByYear = new Dictionary<int, string[]>()
+            {
+                {0, new[] {"Athena", "Mercury", "Jupiter"}},
+                {1, new[] {"Athena", "Mercury", "Jupiter"}},
+                {2, new[] {"Athena", "Mercury", "Jupiter"}},
+                {3, new[] {"Athena", "Mercury", "Jupiter"}},
+                {4, new[] {"Athena", "Mercury", "Jupiter"}},
+                {5, new[] {"Athena", "Mercury", "Jupiter"}},
+                {6, new[] {"Athena", "Mercury", "Jupiter"}},
+                {7, new[] {"Athena", "Mercury", "Jupiter"}},
+            };
         }
 
         public int Years { get; }
@@ -77,5 +88,6 @@ namespace Goodwill.Core
         public string[] Companies { get; }
         public IGameEventAction[] Events { get; }
         public IDictionary<int, IParameters> GameParametersByPlayersCount { get; }
+        public IDictionary<int, string[]> CompanyEvaluatingOrderByYear { get; }
     }
 }

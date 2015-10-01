@@ -67,7 +67,7 @@ namespace Goodwill.Core
                     MarketShare = x.MarketShare,
                     RessourceDependencies = x.RessourceDependencies
                 }).ToDictionary(x => x.Name, x => x),
-                Ressources = RessourcePrices.ToDictionary(x => x.Key, x => x.Value)
+                Ressources = RessourcePrices.ToDictionary(x => x.Key, x => x.Value),
             };
         }
 
