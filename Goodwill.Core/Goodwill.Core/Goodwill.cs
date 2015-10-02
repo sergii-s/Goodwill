@@ -31,7 +31,10 @@ namespace Goodwill.Core
         public Deck<GameEvent> Events { get; set; }
 
         public IDictionary<RessourceInfo, int> RessourcePrices { get; } = new Dictionary<RessourceInfo, int>();
-        
+
+        public GameState GameState { get; set; }
+
+        private IDictionary<string, int> _prices { get; set; }
 
         public Player AddPlayer(string playerName)
         {
@@ -68,24 +71,44 @@ namespace Goodwill.Core
                     RessourceDependencies = x.RessourceDependencies
                 }).ToDictionary(x => x.Name, x => x),
                 Ressources = RessourcePrices.ToDictionary(x => x.Key, x => x.Value),
+                Players = Players.Select(x => new PlayerInfo
+                {
+                    Name = x.Name,
+                    Money = x.Money,
+                    Actions = x.Actions.Select(s => new ActionInfo
+                    {
+                        Company = s.Company.Name
+                    }).ToList()
+                }).ToList(),
+                State = GameState
             };
         }
 
         public void SetPrice(string player, string company, int price)
         {
-            throw new NotImplementedException();
+            if (!Equals(GameState, GameState.Pricing.Company(company)))
+            {
+                throw new Exception();
+            }
+            _prices[player] = price;
         }
 
         public void VoteManager(string player, string company, string manager)
         {
-            throw new NotImplementedException();
+            if (!Equals(GameState, GameState.VotingForManager.Company(company)))
+            {
+                throw new Exception();
+            }
         }
 
         private void BeginYear()
         {
             _gameInitializer.InitializeEvents(this, Config);
             DistributeEvents();
+            GameState = GameState.Pricing.Company(Config.CompanyEvaluatingOrderByYear[_currentYear].First());
+            _prices = new Dictionary<string, int>();
         }
+
 
         private void DistributeEvents()
         {
@@ -122,58 +145,53 @@ namespace Goodwill.Core
                 gameEvent.Action.Applicate(this);
             }
         }
-    }
 
-    public interface IGoodwill
-    {
-        Player AddPlayer(string playerName);
-        void Start();
-        GameInfo GetGameInfo();
-        void SetPrice(string player, string company, int price);
-        void VoteManager(string player, string company, string manager);
-    }
-
-    public class GameInfo
-    {
-        public int CurrentYear { get; set; }
-        public int TotalYears { get; set; }
-        public Dictionary<string, CompanyInfo> Companies { get; set; }
-        public Dictionary<RessourceInfo, int> Ressources { get; set; }
-
-        public GameState State { get; set; }
-    }
-    
-    public class GameState
-    {
-    }
-
-    public class EvaluatingPriceState : GameState
-    {
-        private EvaluatingPriceState(string company)
+        public void Next()
         {
+            if (Equals(GameState, GameState.Pricing))
+            {
+                if (_prices.Count == Players.Count)
+                {
+                    var lowestPrice = _prices.Values.Min();
+                    var highestPrice = _prices.Values.Max();
+                    if (lowestPrice == highestPrice)
+                    {
+                        GameState = GameState.VotingForManager.Company(GameState.CurrentCompany);
+                        return;
+                    }
+
+                    var sellers = _prices.Where(x => x.Value == lowestPrice).ToList();
+                    var buyers = _prices.Where(x => x.Value == highestPrice).ToList();
+
+                    if (sellers.Count == buyers.Count)
+                    {
+                        for (int i = 0; i < sellers.Count; i++)
+                        {
+                            var transactionPrice = (lowestPrice + highestPrice) / 2;
+                            var sellerPlayer = Players.First(x => x.Name == sellers[i].Key);
+                            var buyerPlayer = Players.First(x => x.Name == buyers[i].Key);
+
+                            var action = sellerPlayer.Actions.Pick(x => x.Company.Name == GameState.CurrentCompany);
+                            sellerPlayer.Money += transactionPrice;
+                            buyerPlayer.Actions.Add(action);
+                            buyerPlayer.Money -= transactionPrice;
+                        }
+                    }
+                    else
+                    {
+                        GameState = GameState.ChoosingExchangePartner.Company(GameState.CurrentCompany);
+                        return;
+                    }
+                }
+                else
+                {
+                    throw new Exception("Not all players have set the price");
+                }
+            }
+            else
+            {
+
+            }
         }
-
-        public static GameState For(string company)
-        {
-            return new EvaluatingPriceState(company);
-        }
-    }
-
-    public class CompanyInfo
-    {
-        public string Name { get; set; }
-        public int Money { get; set; }
-        public int MarketShare { get; set; }
-        public ManagerInfo Manager { get; set; }
-        public List<RessourceInfo> RessourceDependencies { get; set; }
-    }
-
-    public enum RessourceInfo
-    {
-        Coal, Fuel, Employee
-    }
-
-    public class ManagerInfo
-    {
     }
 }

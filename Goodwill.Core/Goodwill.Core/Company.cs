@@ -2,6 +2,13 @@ using System.Collections.Generic;
 
 namespace Goodwill.Core
 {
+    public class Constants
+    {
+        public static readonly string Athena = "Athena";
+        public static readonly string Mercury = "Mercury";
+        public static readonly string Jupiter = "Jupiter";
+    }
+
     public class Company
     {
         public string Name { get; set; }

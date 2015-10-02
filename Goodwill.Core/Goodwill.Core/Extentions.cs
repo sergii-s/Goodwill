@@ -25,5 +25,12 @@ namespace Goodwill.Core
                 yield return items[Rnd.Next(items.Count)];
             }
         }
+
+        public static T Pick<T>(this List<T> items, Func<T,bool> check)
+        {
+            var item = items.First(check);
+            items.Remove(item);
+            return item;
+        }
     }
 }
