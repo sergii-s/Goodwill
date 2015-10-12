@@ -7,3 +7,8 @@ C:\Development\sergii\Goodwill.Core\Goodwill.Core\bin\Debug\Goodwill.Core.pdb
 C:\Development\sergii\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.csprojResolveAssemblyReference.cache
 C:\Development\sergii\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.dll
 C:\Development\sergii\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.pdb
+C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.csprojResolveAssemblyReference.cache
+C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.dll
+C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.pdb
+C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\Goodwill.Core\bin\Debug\Goodwill.Core.dll
+C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\Goodwill.Core\bin\Debug\Goodwill.Core.pdb
