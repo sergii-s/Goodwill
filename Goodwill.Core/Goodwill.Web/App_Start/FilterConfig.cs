@@ -10,4 +10,4 @@ namespace Goodwill.Web
             filters.Add(new HandleErrorAttribute());
         }
     }
-}
+} 

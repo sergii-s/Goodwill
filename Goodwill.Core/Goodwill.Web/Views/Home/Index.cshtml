@@ -1,0 +1,20 @@
+﻿<div ng-controller="startGame">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Start new game</h2>
+        </div>
+        <div class="col-md-4">
+            <a class="btn btn-default" ng-click="addPlayer()">Add player</a>
+        </div>
+    </div>
+    <div class="row" ng-repeat="player in players">
+        <div class="col-md-12">
+            {{player.Name}}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-primary">Start with {{players.length}} players</a>
+        </div>
+    </div>
+</div>
