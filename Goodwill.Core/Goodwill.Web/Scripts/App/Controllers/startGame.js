@@ -4,7 +4,7 @@
     angular
         .module('goodwill')
         .controller('startGame',
-            function ($scope) {
+            function ($scope,$linq) {
                 var players = [{ Type: 'Humain', Name: '', State: 'Connected', Host: true }];
                 var computersNames = ["Julien", "Jeremie", "Mohamed", "Alexandre"];
                 $scope.players = players;
@@ -29,6 +29,14 @@
                         Name: computersNames.pop(),
                         State: 'Connected'
                     });
+                };
+                $scope.startGame = function () {
+                    var connectedPlayers = $linq.Enumerable.From(players)
+                        .Where(function(x) {
+                            return x.State == 'Connected';
+                        }).ToArray();
+
+
                 };
             });
 

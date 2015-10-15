@@ -18,6 +18,7 @@ namespace Goodwill.Web
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
                       "~/Scripts/angular.min.js",
+                      "~/Scripts/angular-linq.min.js",
                       "~/Scripts/ui-bootstrap-0.14.0.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
