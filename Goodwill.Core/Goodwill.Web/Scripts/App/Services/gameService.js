@@ -14,7 +14,7 @@
 
         return service;
 
-        function startGame() {
+        function startGame(players) {
             return "/xxxx/";
         }
     }

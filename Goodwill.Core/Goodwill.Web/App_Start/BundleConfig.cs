@@ -23,7 +23,9 @@ namespace Goodwill.Web
 
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                       "~/Scripts/App/app.js",
-                      "~/Scripts/App/Controllers/startGame.js"));
+                      "~/Scripts/App/Controllers/startGame.js",
+                      "~/Scripts/App/Services/gameService.js"
+                      ));
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js",
