@@ -7,7 +7,7 @@ namespace Goodwill.Web.Controllers
 {
     public class GameController : ApiController
     {
-        private static IDictionary<string, Game> _games = new Dictionary<string, Game>();
+        private static readonly IDictionary<string, Game> Games = new Dictionary<string, Game>();
 
         [HttpGet]
         public string Initialize()
@@ -15,7 +15,7 @@ namespace Goodwill.Web.Controllers
             var gameId = ShortGuid.NewShortGuid();
             var playerId = ShortGuid.NewShortGuid();
 
-            _games[gameId] = new Game
+            Games[gameId] = new Game
             {
                 Players = new Dictionary<string, Player>
                 {
@@ -31,11 +31,11 @@ namespace Goodwill.Web.Controllers
         public string InvitePlayer(string tokenString, string playerEmail)
         {
             var token = new Token(tokenString);
-            if (!_games.ContainsKey(token.GameId))
+            if (!Games.ContainsKey(token.GameId))
             {
                 throw new Exception("Game doesnt exist");
             }
-            var game = _games[token.GameId];
+            var game = Games[token.GameId];
             if (!game.Players.ContainsKey(token.PlayerId))
             {
                 throw new Exception("Player token is not valid");
@@ -61,9 +61,31 @@ namespace Goodwill.Web.Controllers
         }
 
         [HttpGet]
-        public string Start(string gameId, Player[] players)
+        public string Start(string tokenString)
         {
-            return "Game started";
+            var token = new Token(tokenString);
+            if (!Games.ContainsKey(token.GameId))
+            {
+                throw new Exception("Game doesnt exist");
+            }
+            var game = Games[token.GameId];
+            if (!game.Players.ContainsKey(token.PlayerId))
+            {
+                throw new Exception("Player token is not valid");
+            }
+            if (!game.Started)
+            {
+                throw new Exception("Game is already started");
+            }
+            var player = game.Players[token.PlayerId];
+            if (!player.Host)
+            {
+                throw new Exception("Only host can start game");
+            }
+
+            game.Start();
+
+            return "Success";
         }
 
         // GET api/game
