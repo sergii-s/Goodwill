@@ -12,11 +12,13 @@
     function startGameController($scope,$linq, gameService) {
         var players = [{ Type: 'Humain', Name: '', State: 'Connected', Host: true }];
         var computersNames = ["Julien", "Jeremie", "Mohamed", "Alexandre"];
+        var playerToken = gameService.initializeGame();
 
         $scope.players = players;
         $scope.readyPlayers = 1;
 
-        function refreshPlayersCount() {
+        function refreshPlayersInfo() {
+            var players = gameService.getPlayers();
             var connectedPlayers = $linq.Enumerable().From(players)
                 .Where(function (x) {
                     return x.State == 'Connected';
@@ -24,28 +26,16 @@
             $scope.readyPlayers = connectedPlayers;
         }
 
-        $scope.addPlayer = function () {
-            players.push({
-                Type: 'Humain',
-                Name: '',
-                Email: '',
-                State: 'Waiting'
-            });
+        $scope.addPlayer = function (playerEmail) {
+            gameService.InvitePlayer(playerToken, playerEmail);
+            refreshPlayersInfo();
         };
         $scope.addComputer = function () {
-            players.push({
-                Type: 'Computer',
-                Name: computersNames.pop(),
-                State: 'Connected'
-            });
-            refreshPlayersCount();
+            gameService.AddComputer(playerToken);
+            refreshPlayersInfo();
         };
         $scope.startGame = function () {
-            var connectedPlayers = $linq.Enumerable.From(players)
-                .Where(function(x) {
-                    return x.State == 'Connected';
-                }).ToArray();
-            var gameid = gameService.StartGame(connectedPlayers);
+            gameService.StartGame(playerToken);
         };
     }
 

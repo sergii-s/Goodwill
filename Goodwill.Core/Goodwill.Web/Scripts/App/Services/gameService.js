@@ -14,7 +14,11 @@
 
         return service;
 
-        function startGame(players) {
+        function startGame(token) {
+            return "/xxxx/";
+        }
+
+        function initializeGame() {
             return "/xxxx/";
         }
     }
