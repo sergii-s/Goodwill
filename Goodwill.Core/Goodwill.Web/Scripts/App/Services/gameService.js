@@ -3,23 +3,33 @@
     
     angular
         .module('goodwill')
-        .factory('gameService', gameService);
+        .factory('gameService', gameServiceFactory);
 
-    gameService.$inject = ['$http'];
+    gameServiceFactory.$inject = ['$http'];
 
-    function gameService($http) {
-        var service = {
-            startGame: startGame
-        };
+    function gameServiceFactory($http) {
+        var gameService = {};
 
-        return service;
-
-        function startGame(token) {
+        gameService.startGame = function(token) {
             return "/xxxx/";
         }
 
-        function initializeGame() {
+        gameService.addComputer = function (token) {
             return "/xxxx/";
         }
+
+        gameService.invitePlayer = function (token) {
+            return "/xxxx/";
+        }
+
+        gameService.initializeGame = function () {
+            return $http.get("/api/game/initialize");
+        }
+
+        gameService.getGameInfo = function (token, gameStateId) {
+            return $http.get("/api/game/initialize");
+        }
+
+        return gameService;
     }
 })();

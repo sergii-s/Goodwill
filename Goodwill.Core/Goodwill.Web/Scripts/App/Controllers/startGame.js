@@ -6,14 +6,24 @@
         .controller('startGame', startGameController);
 
     startGameController.$inject = [
-        '$scope', '$linq', 'gameService'
+        '$scope', '$linq', '$interval', 'gameService'
     ];
 
-    function startGameController($scope,$linq, gameService) {
+    function startGameController($scope, $linq, $interval, gameService) {
         var players = [{ Type: 'Humain', Name: '', State: 'Connected', Host: true }];
-        var computersNames = ["Julien", "Jeremie", "Mohamed", "Alexandre"];
-        var playerToken = gameService.initializeGame();
+        var playerToken = '';
+        var gameStateId = '';
 
+        gameService.initializeGame()
+            .success(function (token) {
+                playerToken = token;
+                console.log('Token generated ', token);
+            })
+            .error(function () {
+                console.log('Token generation failed');
+            });
+
+        $interval(refresh, 3000);
         $scope.players = players;
         $scope.readyPlayers = 1;
 
@@ -27,16 +37,31 @@
         }
 
         $scope.addPlayer = function (playerEmail) {
-            gameService.InvitePlayer(playerToken, playerEmail);
+            gameService.invitePlayer(playerToken, playerEmail);
             refreshPlayersInfo();
         };
+
         $scope.addComputer = function () {
-            gameService.AddComputer(playerToken);
+            gameService.addComputer(playerToken);
             refreshPlayersInfo();
         };
+
         $scope.startGame = function () {
-            gameService.StartGame(playerToken);
+            gameService.startGame(playerToken);
         };
+
+        function refresh() {
+            gameService.getGameInfo(playerToken, gameStateId)
+                .success(function (gameInfos) {
+                    gameInfos.forEach(function (gameInfo, i, arr) {
+                        gameStateId = gameInfo.gameStateId;
+                        console.log('Latest game state id ', gameStateId);    
+                    });
+                })
+                .error(function () {
+                    console.log('Get game info failed');
+                });
+        }
     }
 
 })();
