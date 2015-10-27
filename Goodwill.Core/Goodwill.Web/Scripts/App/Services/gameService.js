@@ -11,15 +11,15 @@
         var gameService = {};
 
         gameService.startGame = function(token) {
-            return "/xxxx/";
+            return $http.get("/api/game/startGame?token=" + token);
         }
 
         gameService.addComputer = function (token) {
-            return "/xxxx/";
+            return $http.get("/api/game/addComputer?token=" + token);
         }
 
-        gameService.invitePlayer = function (token) {
-            return "/xxxx/";
+        gameService.invitePlayer = function (token, email) {
+            return $http.get("/api/game/invitePlayer?token="+token+"&email="+email);
         }
 
         gameService.initializeGame = function () {
@@ -27,7 +27,7 @@
         }
 
         gameService.getGameInfo = function (token, gameStateId) {
-            return $http.get("/api/game/initialize");
+            return $http.get("/api/game/info?token="+token+"&state="+gameStateId);
         }
 
         return gameService;

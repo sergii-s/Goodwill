@@ -32,5 +32,12 @@ namespace Goodwill.Core
             items.Remove(item);
             return item;
         }
+
+        public static T Random<T>(this IEnumerable<T> items)
+        {
+            var itemsArray = items as T[] ?? items.ToArray();
+            var itemIdx = Rnd.Next(itemsArray.Length);
+            return itemsArray[itemIdx];
+        }
     }
 }
