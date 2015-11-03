@@ -11,5 +11,6 @@ namespace Goodwill.Web.Models
         public bool Connected { get; set; }
         public string Email { get; set; }
         public string Name { get; set; }
+        public bool Humain { get; set; }
     }
 }

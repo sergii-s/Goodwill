@@ -17,19 +17,20 @@
         gameService.initializeGame()
             .success(function (token) {
                 playerToken = token;
+                $interval(refresh, 3000);
                 console.log('Token generated ', token);
             })
             .error(function () {
                 console.log('Token generation failed');
             });
 
-        $interval(refresh, 3000);
+
         $scope.players = players;
         $scope.readyPlayers = 1;
         $scope.gameStarted = false;
 
         function refreshPlayersInfo() {
-            var players = gameService.getPlayers();
+            //var players = gameService.getPlayers();
             var connectedPlayers = $linq.Enumerable().From(players)
                 .Where(function (x) {
                     return x.State == 'Connected';
@@ -52,16 +53,16 @@
         };
 
         function applicateGameInfo(gameInfo) {
-            $scope.gameStarted = gameInfo.GameStarted;
+            $scope.gameStarted = gameInfo.Started;
         }
 
         function refresh() {
             gameService.getGameInfo(playerToken, gameStateId)
                 .success(function (gameInfos) {
                     gameInfos.forEach(function (gameInfo, i, arr) {
-                        gameStateId = gameInfo.gameStateId;
+                        gameStateId = gameInfo.GameStateId;
                         applicateGameInfo(gameInfo);
-                        console.log('Latest game state id ', gameStateId);    
+                        console.log('Latest game state id ', gameStateId);
                     });
                 })
                 .error(function () {

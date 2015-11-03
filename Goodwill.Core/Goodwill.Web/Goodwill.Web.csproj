@@ -132,6 +132,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\GameController.cs" />
     <Compile Include="Controllers\ShortGuid.cs" />
+    <Compile Include="Controllers\Token.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

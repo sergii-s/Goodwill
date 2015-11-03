@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Http;
 using Goodwill.Core;
 using Goodwill.Web.Models;
+using static System.Int32;
 using Player = Goodwill.Web.Models.Player;
 
 namespace Goodwill.Web.Controllers
@@ -10,7 +12,6 @@ namespace Goodwill.Web.Controllers
     public class GameController : ApiController
     {
         private static readonly IDictionary<string, Game> Games = new Dictionary<string, Game>();
-        private static readonly string[] Comuters = { "1", "2", "3" };
 
         [HttpGet]
         public string Initialize()
@@ -22,7 +23,11 @@ namespace Goodwill.Web.Controllers
             {
                 Players = new Dictionary<string, Player>
                 {
-                    {playerId, new Player {Host = true, Connected = true}}
+                    {playerId, new Player {Host = true, Connected = true, Humain = true, Name = "Boss"}}
+                },
+                Infos = new Dictionary<string, List<GameInfoForPlayer>>
+                {
+                    {playerId, new List<GameInfoForPlayer>()}
                 }
             };
 
@@ -41,12 +46,7 @@ namespace Goodwill.Web.Controllers
                 .IsHost();
 
             var game = Games[playerToken.GameId];
-            var playerId = ShortGuid.NewShortGuid();
-            game.Players[playerId] = new Player
-            {
-                Connected = false,
-                Email = email
-            };
+            game.AddPlayer(email);
 
             return "Invite is sent";
         }
@@ -62,14 +62,9 @@ namespace Goodwill.Web.Controllers
                 .IsHost();
 
             var game = Games[playerToken.GameId];
-            var playerId = ShortGuid.NewShortGuid();
-            game.Players[playerId] = new Player
-            {
-                Connected = true,
-                Name = Comuters.Random()
-            };
+            game.AddComputer();
 
-            return "Invite is sent";
+            return "Added";
         }
 
         [HttpGet]
@@ -86,6 +81,27 @@ namespace Goodwill.Web.Controllers
             game.Start();
 
             return "Success";
+        }
+
+        [HttpGet]
+        public List<GameInfoForPlayer> Info(string token, string state)
+        {
+            var playerToken = new Token(token);
+            new TokenValidator(playerToken)
+                .GameExists()
+                .PlayerExists()
+                .NotStarted()
+                .IsHost();
+
+            var game = Games[playerToken.GameId];
+
+            if (string.IsNullOrEmpty(state))
+            {
+                return game.Infos[playerToken.PlayerId];
+            }
+
+            var latestStateId = Parse(state);
+            return game.Infos[playerToken.PlayerId].Where(x => x.GameStateId > latestStateId).ToList();
         }
 
         // GET api/game
@@ -125,7 +141,7 @@ namespace Goodwill.Web.Controllers
             public TokenValidator NotStarted()
             {
                 var game = Games[_playerToken.GameId];
-                if (!game.Started)
+                if (game.Started)
                 {
                     throw new Exception("The game is already started");
                 }
@@ -141,23 +157,6 @@ namespace Goodwill.Web.Controllers
                     throw new Exception("Not a host");
                 }
             }
-        }
-    }
-
-    public class Token
-    {
-        public Token(string token)
-        {
-            GameId = token.Substring(0, 10);
-            PlayerId = token.Substring(10, 10);
-        }
-
-        public string GameId { get; }
-        public string PlayerId { get; }
-
-        public override string ToString()
-        {
-            return GameId + PlayerId;
         }
     }
 }
