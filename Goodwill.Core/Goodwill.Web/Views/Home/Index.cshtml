@@ -1,36 +1,50 @@
 ﻿<div ng-controller="startGame">
-    <div class="row">
-        <div class="col-md-12">
-            <h2>Start new game</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <a class="btn btn-default" ng-click="addPlayer()">Add player</a>
-            <a class="btn btn-default" ng-click="addComputer()">Add computer</a>
-        </div>
-    </div>
-    <div class="row" ng-repeat="player in players">
-        <div class="col-md-2">
-            {{player.Type}}
-        </div>
-        <div class="col-md-4">
-            <div ng-switch on="player.Type">
-                <div ng-switch-when="Humain">
-                    <input type="text" value="{{player.Name}}" />
-                </div>
-                <div ng-switch-default>
-                    {{player.Name}}
-                </div>
+    <div ng-if="gameStarted==false">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Start new game</h2>
             </div>
         </div>
-        <div class="col-md-4">
-            {{player.State}}
+        <div class="row">
+            <div class="col-md-4">
+                <a class="btn btn-default" ng-click="addPlayer()">Add player</a>
+                <a class="btn btn-default" ng-click="addComputer()">Add computer</a>
+            </div>
+        </div>
+        <div class="row" ng-repeat="player in players">
+            <div class="col-md-2">
+                {{player.Type}}
+            </div>
+            <div class="col-md-4">
+                <div ng-switch on="player.Type">
+                    <div ng-switch-when="Humain">
+                        <input type="text" value="{{player.Name}}"/>
+                    </div>
+                    <div ng-switch-default>
+                        {{player.Name}}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                {{player.State}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <a class="btn btn-primary" ng-click="startGame()">Start with {{readyPlayers}} players</a>
+            </div>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <a class="btn btn-primary" ng-click="startGame()">Start with {{readyPlayers}} players</a>
+    <div ng-if="gameStarted==true">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Game in progress</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                
+            </div>
         </div>
     </div>
 </div>

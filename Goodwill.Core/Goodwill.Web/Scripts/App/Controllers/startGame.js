@@ -26,6 +26,7 @@
         $interval(refresh, 3000);
         $scope.players = players;
         $scope.readyPlayers = 1;
+        $scope.gameStarted = false;
 
         function refreshPlayersInfo() {
             var players = gameService.getPlayers();
@@ -50,11 +51,16 @@
             gameService.startGame(playerToken);
         };
 
+        function applicateGameInfo(gameInfo) {
+            $scope.gameStarted = gameInfo.GameStarted;
+        }
+
         function refresh() {
             gameService.getGameInfo(playerToken, gameStateId)
                 .success(function (gameInfos) {
                     gameInfos.forEach(function (gameInfo, i, arr) {
                         gameStateId = gameInfo.gameStateId;
+                        applicateGameInfo(gameInfo);
                         console.log('Latest game state id ', gameStateId);    
                     });
                 })
