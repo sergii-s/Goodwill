@@ -23,7 +23,7 @@ namespace Goodwill.Web.Controllers
             {
                 Players = new Dictionary<string, Player>
                 {
-                    {playerId, new Player {Host = true, Connected = true, Humain = true, Name = "Boss"}}
+                    {playerId, new Player {PlayerPublicId = 0,Host = true, Connected = true, Humain = true, Name = "Boss"}}
                 },
                 Infos = new Dictionary<string, List<GameInfoForPlayer>>
                 {

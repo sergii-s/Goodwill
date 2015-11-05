@@ -19,6 +19,7 @@ namespace Goodwill.Web.Models
             var playerId = ShortGuid.NewShortGuid();
             Players[playerId] = new Player
             {
+                PlayerPublicId = Players.Count,
                 Connected = false,
                 Humain = true,
                 Email = email
@@ -27,9 +28,28 @@ namespace Goodwill.Web.Models
             AddSnapshotInfo();
         }
 
+        public void AddComputer()
+        {
+            var playerId = ShortGuid.NewShortGuid();
+            Players[playerId] = new Player
+            {
+                PlayerPublicId = Players.Count,
+                Connected = true,
+                Humain = false,
+                Name = Comuters.Random()
+            };
+            AddSnapshotInfo();
+        }
+
+        public void ConnectPlayer(string token)
+        {
+            Players[token].Connected = true;
+            AddSnapshotInfo();
+        }
+
         private void AddSnapshotInfo()
         {
-            foreach (var player in Players.Where(x=>x.Value.Connected && x.Value.Humain))
+            foreach (var player in Players.Where(x => x.Value.Connected && x.Value.Humain))
             {
                 Infos[player.Key].Add(new GameInfoForPlayer
                 {
@@ -38,6 +58,7 @@ namespace Goodwill.Web.Models
                     Started = Started,
                     Players = Players.Where(x => x.Key != player.Key).Select(x => new PlayerPublicInfo
                     {
+                        PlayerPublicId = x.Value.PlayerPublicId,
                         Name = x.Value.Name,
                         Humain = x.Value.Humain,
                         Connected = x.Value.Connected,
@@ -45,15 +66,6 @@ namespace Goodwill.Web.Models
                     }).ToList()
                 });
             }
-        }
-
-        public void ConnectPlayer(string token)
-        {
-            Players[token] = new Player
-            {
-                Connected = true
-            };
-            AddSnapshotInfo();
         }
 
         public void Start()
@@ -72,25 +84,15 @@ namespace Goodwill.Web.Models
             _game.Start();
         }
 
-        public void AddComputer()
-        {
-            var playerId = ShortGuid.NewShortGuid();
-            Players[playerId] = new Player
-            {
-                Connected = true,
-                Humain = false,
-                Name = Comuters.Random()
-            };
-            AddSnapshotInfo();
-        }
     }
 
     public class PlayerPublicInfo
     {
+        public int PlayerPublicId { get; set; }
         public string Name { get; set; }
         public bool Humain { get; set; }
         public bool Connected { get; set; }
-        public bool Host { get; set; }
+        public bool Host { get; set; }        
     }
 
     public class GameInfoForPlayer
