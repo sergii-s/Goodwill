@@ -60,6 +60,7 @@ namespace Goodwill.Web.Models
                     {
                         PlayerPublicId = x.Value.PlayerPublicId,
                         Name = x.Value.Name,
+                        Email = x.Value.Email,
                         Humain = x.Value.Humain,
                         Connected = x.Value.Connected,
                         Host = x.Value.Host
@@ -92,7 +93,8 @@ namespace Goodwill.Web.Models
         public string Name { get; set; }
         public bool Humain { get; set; }
         public bool Connected { get; set; }
-        public bool Host { get; set; }        
+        public bool Host { get; set; }
+        public string Email { get; set; }
     }
 
     public class GameInfoForPlayer

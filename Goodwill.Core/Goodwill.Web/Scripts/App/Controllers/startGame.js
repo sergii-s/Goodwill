@@ -54,12 +54,28 @@
 
         function applicateGameInfo(gameInfo) {
             $scope.gameStarted = gameInfo.Started;
+            players[0].Name = gameInfo.Name;
+            gameInfo.Players.forEach(function (player) {
+                if ($linq.Enumerable().From(players).Any(function(x) { x.PlayerPublicId == player.PlayerPublicId })) {
+                    players.push({
+                        Type: player.Humain ? 'Humain' : 'Computer',
+                        Name: player.Name == null ? player.Email : player.Name,
+                        State: player.Connected ? 'Connected' : 'Waiting',
+                        Host: player.Host
+                    });
+                } else {
+                    players[player.PlayerPublicId].Type = player.Humain ? 'Humain' : 'Computer';
+                    players[player.PlayerPublicId].Name = player.Name == null ? player.Email : player.Name;
+                    players[player.PlayerPublicId].State = player.Connected ? 'Connected' : 'Waiting';
+                    players[player.PlayerPublicId].Host = player.Host;
+                }
+            });
         }
 
         function refresh() {
             gameService.getGameInfo(playerToken, gameStateId)
                 .success(function (gameInfos) {
-                    gameInfos.forEach(function (gameInfo, i, arr) {
+                    gameInfos.forEach(function (gameInfo) {
                         gameStateId = gameInfo.GameStateId;
                         applicateGameInfo(gameInfo);
                         console.log('Latest game state id ', gameStateId);
