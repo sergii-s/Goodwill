@@ -54,12 +54,21 @@
 
         function applicateGameInfo(gameInfo) {
             $scope.gameStarted = gameInfo.Started;
+            players[0].Name = gameInfo.Name;
+            gameInfo.Players.forEach(function(player) {
+                players.push({
+                    Type: player.Humain ? 'Humain' : 'Computer',
+                    Name: player.Name == null ? player.Email : player.Name,
+                    State: player.Connected ? 'Connected' : 'Waiting',
+                    Host: player.Host
+                });
+            });
         }
 
         function refresh() {
             gameService.getGameInfo(playerToken, gameStateId)
                 .success(function (gameInfos) {
-                    gameInfos.forEach(function (gameInfo, i, arr) {
+                    gameInfos.forEach(function (gameInfo) {
                         gameStateId = gameInfo.GameStateId;
                         applicateGameInfo(gameInfo);
                         console.log('Latest game state id ', gameStateId);

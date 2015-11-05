@@ -48,7 +48,7 @@ namespace Goodwill.Web.Controllers
             var game = Games[playerToken.GameId];
             game.AddPlayer(email);
 
-            return "Invite is sent";
+            return "Success";
         }
 
         [HttpGet]
@@ -64,7 +64,7 @@ namespace Goodwill.Web.Controllers
             var game = Games[playerToken.GameId];
             game.AddComputer();
 
-            return "Added";
+            return "Success";
         }
 
         [HttpGet]
