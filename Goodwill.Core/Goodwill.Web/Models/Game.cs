@@ -51,7 +51,7 @@ namespace Goodwill.Web.Models
         {
             foreach (var player in Players.Where(x => x.Value.Connected && x.Value.Humain))
             {
-                Infos[player.Key].Add(new GameInfoForPlayer
+                var gameInfoForPlayer = new GameInfoForPlayer
                 {
                     GameStateId = Infos[player.Key].Count,
                     Name = Players[player.Key].Name,
@@ -65,7 +65,14 @@ namespace Goodwill.Web.Models
                         Connected = x.Value.Connected,
                         Host = x.Value.Host
                     }).ToList()
-                });
+                };
+                if (Started)
+                {
+                    var gameInfo = _game.GetGameInfo();
+                    gameInfoForPlayer.PrivateInfo = gameInfo.PlayersDictionary[Players[player.Key].Name];
+                    gameInfoForPlayer.Companies = gameInfo.Companies.Values.ToList();
+                }
+                Infos[player.Key].Add(gameInfoForPlayer);
             }
         }
 
@@ -83,6 +90,10 @@ namespace Goodwill.Web.Models
                 _game.AddPlayer(player.Value.Name);
             }
             _game.Start();
+
+            Started = true;
+
+            AddSnapshotInfo();
         }
 
     }
@@ -103,5 +114,7 @@ namespace Goodwill.Web.Models
         public bool Started { get; set; }
         public List<PlayerPublicInfo> Players { get; set; }
         public int GameStateId { get; set; }
+        public List<CompanyInfo> Companies { get; set; }
+        public PlayerInfo PrivateInfo { get; set; }
     }
 }

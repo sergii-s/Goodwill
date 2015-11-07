@@ -89,9 +89,7 @@ namespace Goodwill.Web.Controllers
             var playerToken = new Token(token);
             new TokenValidator(playerToken)
                 .GameExists()
-                .PlayerExists()
-                .NotStarted()
-                .IsHost();
+                .PlayerExists();
 
             var game = Games[playerToken.GameId];
 

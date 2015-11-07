@@ -22,31 +22,184 @@ namespace Goodwill.Core
             MaxRessourcePrice = 25;
             Managers = new List<Manager>
             {
-                new Manager("Francois", 0),
-                new Manager("Derec", 5),
-                new Manager("Helene", 10),
-                new Manager("x1", 0),
-                new Manager("x2", 0),
-                new Manager("x3", 0),
-                new Manager("x4", 0),
-                new Manager("x5", 0),
-                new Manager("x6", 0)
+                Build.Manager
+                    .Named("Helene")
+                    .WithInnovationLevel(2,RessourceInfo.Employee,RessourceInfo.Fuel)
+                    .WithPromotionLevel(2)
+                    .Create(),
+                Build.Manager
+                    .Named("Gaston")
+                    .WithBonus(5)
+                    .WithInnovationLevel(2,RessourceInfo.Employee,RessourceInfo.Coal)
+                    .WithOptimisationLevel(2)
+                    .WithPromotionLevel(1)
+                    .WithDividends()
+                    .Create(),
+                Build.Manager
+                    .Named("Alphonse")
+                    .WithOptimisationLevel(3)
+                    .WithPromotionLevel(1)
+                    .WithDividends()
+                    .Create(),
+                Build.Manager
+                    .Named("Ingrid")
+                    .WithOptimisationLevel(2)
+                    .WithPromotionLevel(2)
+                    .WithDividends()
+                    .Create(),
+                Build.Manager
+                    .Named("Colette")
+                    .WithBonus(10)
+                    .WithOptimisationLevel(1)
+                    .WithPromotionLevel(3)
+                    .WithDividends()
+                    .Create(),
+                Build.Manager
+                    .Named("Edouard")
+                    .WithBonus(5)
+                    .WithInnovationLevel(3,RessourceInfo.Fuel,RessourceInfo.Employee)
+                    .WithPromotionLevel(2)
+                    .Create(),
+                Build.Manager
+                    .Named("Derek")
+                    .WithBonus(10)
+                    .WithInnovationLevel(1,RessourceInfo.Coal,RessourceInfo.Employee)
+                    .WithPromotionLevel(3)
+                    .Create(),
+                Build.Manager
+                    .Named("Boris")
+                    .WithInnovationLevel(1,RessourceInfo.Fuel,RessourceInfo.Coal)
+                    .WithOptimisationLevel(3)
+                    .Create(),
+                Build.Manager
+                    .Named("Francois")
+                    .WithBonus(5)
+                    .WithInnovationLevel(3,RessourceInfo.Coal,RessourceInfo.Fuel)
+                    .WithOptimisationLevel(1)
+                    .WithPromotionLevel(1)
+                    .Create(),
             };
             Events = new[]
             {
-                //TODO compose all events
-                GameEventAction.RessourcePriceMove(RessourceInfo.Coal, 5),
-                GameEventAction.RessourcePriceMove(RessourceInfo.Coal, 10),
-                GameEventAction.RessourcePriceMove(RessourceInfo.Coal, -5),
-                GameEventAction.RessourcePriceMove(RessourceInfo.Coal, -10),
-                GameEventAction.RessourcePriceMove(RessourceInfo.Fuel, 5),
-                GameEventAction.RessourcePriceMove(RessourceInfo.Fuel, 10),
-                GameEventAction.RessourcePriceMove(RessourceInfo.Fuel, -5),
-                GameEventAction.RessourcePriceMove(RessourceInfo.Fuel, -10),
-                GameEventAction.RessourcePriceMove(RessourceInfo.Employee, 5),
-                GameEventAction.RessourcePriceMove(RessourceInfo.Employee, 10),
-                GameEventAction.RessourcePriceMove(RessourceInfo.Employee, -5),
-                GameEventAction.RessourcePriceMove(RessourceInfo.Employee, -10),
+                Build.Event
+                    .PriceChange(RessourceInfo.Fuel, 10)
+                    .Promotion(3)
+                    .Create(),
+                Build.Event
+                    .Promotion(3)
+                    .Create(),
+                Build.Event
+                    .PriceChange(RessourceInfo.Coal, -10)
+                    .Optimisation(3)
+                    .Create(),
+                Build.Event
+                    .RessourceBonus(RessourceInfo.Coal, 10)
+                    .Innovation(2, 3)
+                    .Create(),
+                Build.Event
+                    .PriceChange(RessourceInfo.Fuel, -10)
+                    .Optimisation(3)
+                    .Create(),
+                Build.Event
+                    .PriceChange(RessourceInfo.Employee, 10)
+                    .Innovation(2)
+                    .Create(),
+                Build.Event
+                    .RessourceBonus(RessourceInfo.Fuel, 10)
+                    .Optimisation(1)
+                    .Create(),
+                Build.Event
+                    .PriceChange(RessourceInfo.Coal, -5)
+                    .Innovation(2)
+                    .Create(),
+                Build.Event
+                    .RessourceBonus(RessourceInfo.Employee, 10)
+                    .Promotion(3)
+                    .Create(),
+                Build.Event
+                    .PriceChange(RessourceInfo.Coal, 10)
+                    .Optimisation(2)
+                    .Create(),
+                Build.Event
+                    .PriceChange(RessourceInfo.Employee, -5)
+                    .Innovation(1,3)
+                    .Create(),
+                Build.Event
+                    .PriceChange(RessourceInfo.Employee, 5)
+                    .Optimisation(3)
+                    .Create(),
+                Build.Event
+                    .PriceChange(RessourceInfo.Fuel, -5)
+                    .Promotion(1)
+                    .Create(),
+                Build.Event
+                    .Scandal("Athena")
+                    .Promotion(1)
+                    .Create(),
+                Build.Event
+                    .Scandal("Jupiter")
+                    .Innovation(3)
+                    .Create(),
+                Build.Event
+                    .Scandal("Mercury")
+                    .Promotion(2)
+                    .Create(),
+                Build.Event
+                    .PriceChange(RessourceInfo.Fuel, 5)
+                    .Innovation(1)
+                    .Create(),
+                Build.Event
+                    .PriceChange(RessourceInfo.Employee, -10)
+                    .Promotion(3)
+                    .Create(),
+                Build.Event
+                    .PriceChange(RessourceInfo.Coal, 5)
+                    .Promotion(2)
+                    .Create(),
+                Build.Event
+                    .PriceChangeAllRessources(5)
+                    .Innovation(3)
+                    .Create(),
+                Build.Event
+                    .PriceChangeAllRessources(-5)
+                    .Innovation(3)
+                    .Create(),
+                Build.Event
+                    .RessourceTax(RessourceInfo.Fuel, 10)
+                    .Innovation(2,3)
+                    .Create(),
+                Build.Event
+                    .RessourceTax(RessourceInfo.Employee, 10)
+                    .Innovation(2,3)
+                    .Create(),
+                Build.Event
+                    .RessourceTax(RessourceInfo.Coal, 10)
+                    .Promotion(2)
+                    .Create(),
+            };
+            Percentages = new[]
+            {
+                0,
+                5,
+                10,
+                15,
+                20,
+                25,
+                30,
+                35,
+                40,
+                45,
+                50,
+                55,
+                60,
+                65,
+                70,
+                75,
+                80,
+                85,
+                90,
+                95,
+                100
             };
             GameParametersByPlayersCount = new Dictionary<int, IParameters>()
             {
@@ -72,6 +225,7 @@ namespace Goodwill.Core
             };
         }
 
+        public int[] Percentages { get; }
         public int Years { get; }
         public int MoneyByMarketPart { get; }
         public RessourceInfo[] Ressources { get; }

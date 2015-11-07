@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace Goodwill.Core
 {
@@ -21,13 +22,25 @@ namespace Goodwill.Core
 
     public class Manager
     {
-        public Manager(string name, int bonus)
+        public Manager(string name, int bonus, bool dividends, int promotion, int optimisation, int innovation, RessourceInfo innovationFrom, RessourceInfo innovationTo)
         {
             Name = name;
             Bonus = bonus;
+            Dividends = dividends;
+            Promotion = promotion;
+            Optimisation = optimisation;
+            Innovation = innovation;
+            InnovationFrom = innovationFrom;
+            InnovationTo = innovationTo;
         }
 
         public string Name { get;}
         public int Bonus { get; }
+        public bool Dividends { get; }
+        public int Promotion { get; }
+        public int Optimisation { get; }
+        public int Innovation { get; }
+        public RessourceInfo InnovationFrom { get; }
+        public RessourceInfo InnovationTo { get; }
     }
 }

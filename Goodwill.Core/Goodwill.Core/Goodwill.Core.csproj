@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Build.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="CompanyInfo.cs" />
     <Compile Include="Events\CompositAction.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="Extentions.cs" />
     <Compile Include="Events\GameEvent.cs" />
     <Compile Include="Events\GameEventAction.cs" />
+    <Compile Include="Events\GameEventBuilder.cs" />
     <Compile Include="GameInfo.cs" />
     <Compile Include="GameInitializer.cs" />
     <Compile Include="GameState.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="IGameInitializer.cs" />
     <Compile Include="Configuration\IGameParameters.cs" />
     <Compile Include="IGoodwill.cs" />
+    <Compile Include="ManagerBuilder.cs" />
     <Compile Include="ManagerInfo.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

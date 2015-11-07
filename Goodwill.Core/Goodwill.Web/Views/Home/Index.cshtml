@@ -18,7 +18,7 @@
             <div class="col-md-4">
                 <div ng-switch on="player.Type">
                     <div ng-switch-when="Humain">
-                        <input type="text" value="{{player.Name}}"/>
+                        <input type="text" value="{{player.Name}}" />
                     </div>
                     <div ng-switch-default>
                         {{player.Name}}
@@ -42,9 +42,18 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-4" ng-repeat="company in companies">
+                {{company.Name}}
+                Money : {{company.Money}}
+                MarketShare : {{company.MarketShare}}
+                <div>
+                    Manager : {{company.Manager.Name}}
+                    {{company.Manager.}}
+                </div>
                 
+                <div class="col-md-4" ng-repeat="ressource in company.Ressources">
+                    {{ressource}}
+                </div>
             </div>
         </div>
     </div>
-</div>

@@ -16,3 +16,4 @@ C:\Development\sergii-s\Goodwill.Core\Goodwill.Core\bin\Debug\Goodwill.Core.pdb
 C:\Development\sergii-s\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.csprojResolveAssemblyReference.cache
 C:\Development\sergii-s\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.dll
 C:\Development\sergii-s\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.pdb
+C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\Goodwill.Core\obj\Debug\Goodwill.Core.csprojResolveAssemblyReference.cache

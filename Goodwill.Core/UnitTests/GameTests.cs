@@ -158,7 +158,7 @@ namespace UnitTests
         {
             var game = GameWithFourPlayers();
 
-            var gameEvent = GameEventAction.RessourcePriceMove(RessourceInfo.Coal, move);
+            var gameEvent = Build.Event.PriceChange(RessourceInfo.Coal, move).Create();
             gameEvent.Applicate(game);
 
             Check.That(game.RessourcePrices[RessourceInfo.Coal]).IsEqualTo(res);

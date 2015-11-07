@@ -11,7 +11,7 @@
         var gameService = {};
 
         gameService.startGame = function(token) {
-            return $http.get("/api/game/startGame?token=" + token);
+            return $http.get("/api/game/start?token=" + token);
         }
 
         gameService.addComputer = function (token) {
