@@ -42,18 +42,65 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-4" ng-repeat="company in companies">
-                {{company.Name}}
-                Money : {{company.Money}}
-                MarketShare : {{company.MarketShare}}
-                <div>
-                    Manager : {{company.Manager.Name}}
-                    {{company.Manager.}}
+            <div class="col-md-2 opponent" ng-repeat="opponent in opponents">
+                <div>{{opponent.Name}}</div>
+                <div>{{opponent.Money}}</div>
+                <div ng-repeat="actionGroup in opponent.Actions">
+                    {{actionGroup.Company}} : {{actionGroup.Count}}
                 </div>
-                
-                <div class="col-md-4" ng-repeat="ressource in company.Ressources">
-                    {{ressource}}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 company {{company.Name}}" ng-repeat="company in companies">
+                <h4>{{company.Name}}</h4>
+                <div>Money : {{company.Money}}</div>
+                <div>MarketShare : {{company.MarketShare}}</div>
+                <div class="manager">
+                    <h4>{{company.Manager.Name}}</h4>
+                    <div>Bonus : {{company.Manager.Bonus}}</div>
+                    <div>Innovation : {{company.Manager.Innovation}}</div>
+                    <div>from : {{company.Manager.InnovationFrom}}</div>
+                    <div>to : {{company.Manager.InnovationTo}}</div>
+                    <div>Optimisation : {{company.Manager.Optimisation}}</div>
+                    <div>Promotion : {{company.Manager.Promotion}}</div>
+                    <div>Dividends : {{company.Manager.Dividends}}</div>
+                </div>
+                <div ng-repeat="ressource in company.Ressources">
+                    {{ressource.RessourceName}}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2 manager">Derek</div>
+            <div class="col-md-2 manager">Francois</div>
+            <div class="col-md-2 manager">Helene</div>
+            <div class="col-md-2">
+                <div>Year 1 of 7</div>
+                <div>
+                    <b>Athena</b> -> Mercury -> Jupiter
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div>Ressource prices</div>
+                <div>Coal : 10</div>
+                <div>Fuel : 10</div>
+                <div>Employee : 10</div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 opponent">
+                <div>{{currentPlayer.Name}}</div>
+                <div>{{currentPlayer.Money}}</div>
+                <div ng-repeat="actionGroup in currentPlayer.Actions">
+                    {{actionGroup.Company}} : {{actionGroup.Count}}
+                </div>
+                <div ng-repeat="gameEvent in currentPlayer.Events">
+                    {{gameEvent.Percentage}}%
+                    <div ng-repeat="gameEventAction in gameEvent.Actions">
+                        {{gameEventAction.Name}}
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+</div>

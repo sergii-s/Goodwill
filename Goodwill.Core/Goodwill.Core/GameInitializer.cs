@@ -103,9 +103,9 @@ namespace Goodwill.Core
             }
         }
 
-        protected virtual List<RessourceInfo> GenerateRessorceDependencies()
+        protected virtual List<Ressource> GenerateRessorceDependencies()
         {
-            var ressourceInfos = Enum.GetValues(typeof (RessourceInfo)).Cast<RessourceInfo>().ToList();
+            var ressourceInfos = Enum.GetValues(typeof (Ressource)).Cast<Ressource>().ToList();
             return ressourceInfos.GenerateRandom(3).ToList();
         }
 

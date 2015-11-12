@@ -8,8 +8,8 @@ namespace Goodwill.Core
         private int _promotion;
         private int _optimisation;
         private int _innovation;
-        private RessourceInfo _innovateFrom;
-        private RessourceInfo _innovateTo;
+        private Ressource _innovateFrom;
+        private Ressource _innovateTo;
 
         public ManagerBuilder Named(string name)
         {
@@ -39,7 +39,7 @@ namespace Goodwill.Core
             _optimisation = level;
             return this;
         }
-        public ManagerBuilder WithInnovationLevel(int level, RessourceInfo ressourceFrom, RessourceInfo ressourceTo)
+        public ManagerBuilder WithInnovationLevel(int level, Ressource ressourceFrom, Ressource ressourceTo)
         {
             _innovation = level;
             _innovateFrom = ressourceFrom;

@@ -11,14 +11,14 @@ namespace Goodwill.Core.Events
             return new CompositAction(_actions);
         }
 
-        public GameEventBuilder PriceChange(RessourceInfo ressourceInfo, int priceChange)
+        public GameEventBuilder PriceChange(Ressource ressource, int priceChange)
         {
             _actions.Add(new GameEventAction(goodwill =>
             {
-                var newPrice = goodwill.RessourcePrices[ressourceInfo] + priceChange;
+                var newPrice = goodwill.RessourcePrices[ressource] + priceChange;
                 newPrice = (newPrice > goodwill.Config.MaxRessourcePrice) ? goodwill.Config.MaxRessourcePrice : newPrice;
                 newPrice = (newPrice < goodwill.Config.MinRessourcePrice) ? goodwill.Config.MinRessourcePrice : newPrice;
-                goodwill.RessourcePrices[ressourceInfo] = newPrice;
+                goodwill.RessourcePrices[ressource] = newPrice;
             }));
             return this;
         }
@@ -50,7 +50,7 @@ namespace Goodwill.Core.Events
             return this;
         }
 
-        public GameEventBuilder RessourceBonus(RessourceInfo ressource, int i)
+        public GameEventBuilder RessourceBonus(Ressource ressource, int i)
         {
             _actions.Add(new GameEventAction(goodwill =>
             {
@@ -59,7 +59,7 @@ namespace Goodwill.Core.Events
             return this;
         }
 
-        public GameEventBuilder RessourceTax(RessourceInfo ressource, int i)
+        public GameEventBuilder RessourceTax(Ressource ressource, int i)
         {
             _actions.Add(new GameEventAction(goodwill =>
             {

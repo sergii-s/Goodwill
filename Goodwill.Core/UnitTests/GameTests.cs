@@ -77,16 +77,16 @@ namespace UnitTests
         {
             private static int _cnt = -1;
 
-            protected override List<RessourceInfo> GenerateRessorceDependencies()
+            protected override List<Ressource> GenerateRessorceDependencies()
             {
                 _cnt++;
                 if (_cnt == 0)
                 {
-                    return new List<RessourceInfo>() { RessourceInfo.Coal, RessourceInfo.Coal, RessourceInfo.Coal };
+                    return new List<Ressource>() { Ressource.Coal, Ressource.Coal, Ressource.Coal };
                 }
                 return _cnt == 1
-                    ? new List<RessourceInfo>() { RessourceInfo.Fuel, RessourceInfo.Fuel, RessourceInfo.Fuel }
-                    : new List<RessourceInfo>() { RessourceInfo.Employee, RessourceInfo.Employee, RessourceInfo.Employee };
+                    ? new List<Ressource>() { Ressource.Fuel, Ressource.Fuel, Ressource.Fuel }
+                    : new List<Ressource>() { Ressource.Employee, Ressource.Employee, Ressource.Employee };
             }
 
             public override void InitializeEvents(Goodwill.Core.Goodwill goodwill, IGameParameters config)
@@ -124,17 +124,17 @@ namespace UnitTests
             Check.That(gameInfo1.Companies[_athena].Money).IsEqualTo(100);
             Check.That(gameInfo1.Companies[_athena].MarketShare).IsEqualTo(35);
             Check.That(gameInfo1.Companies[_athena].RessourceDependencies)
-                .ContainsExactly(RessourceInfo.Coal, RessourceInfo.Coal, RessourceInfo.Coal);
+                .ContainsExactly(Ressource.Coal, Ressource.Coal, Ressource.Coal);
 
             Check.That(gameInfo1.Companies[_mercury].Money).IsEqualTo(100);
             Check.That(gameInfo1.Companies[_mercury].MarketShare).IsEqualTo(35);
             Check.That(gameInfo1.Companies[_mercury].RessourceDependencies)
-                .ContainsExactly(RessourceInfo.Fuel, RessourceInfo.Fuel, RessourceInfo.Fuel);
+                .ContainsExactly(Ressource.Fuel, Ressource.Fuel, Ressource.Fuel);
 
             Check.That(gameInfo1.Companies["Jupiter"].Money).IsEqualTo(110);
             Check.That(gameInfo1.Companies["Jupiter"].MarketShare).IsEqualTo(30);
             Check.That(gameInfo1.Companies["Jupiter"].RessourceDependencies)
-                .ContainsExactly(RessourceInfo.Employee, RessourceInfo.Employee, RessourceInfo.Employee);
+                .ContainsExactly(Ressource.Employee, Ressource.Employee, Ressource.Employee);
 
             game.FinishYear();
             var gameInfo2 = game.GetGameInfo();
@@ -158,10 +158,10 @@ namespace UnitTests
         {
             var game = GameWithFourPlayers();
 
-            var gameEvent = Build.Event.PriceChange(RessourceInfo.Coal, move).Create();
+            var gameEvent = Build.Event.PriceChange(Ressource.Coal, move).Create();
             gameEvent.Applicate(game);
 
-            Check.That(game.RessourcePrices[RessourceInfo.Coal]).IsEqualTo(res);
+            Check.That(game.RessourcePrices[Ressource.Coal]).IsEqualTo(res);
         }
 
 

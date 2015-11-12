@@ -62,7 +62,7 @@
     <Compile Include="ManagerInfo.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RessourceInfo.cs" />
+    <Compile Include="Ressource.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Events\Implementations\" />

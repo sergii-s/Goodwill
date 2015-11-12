@@ -20,6 +20,8 @@
             }
         ];
         var companies = [];
+        var opponents = [];
+        var currentPlayer = {};
         var playerToken = '';
         var gameStateId = '';
 
@@ -35,7 +37,9 @@
 
 
         $scope.players = players;
+        $scope.opponents = opponents;
         $scope.companies = companies;
+        $scope.currentPlayer = currentPlayer;
         $scope.readyPlayers = 1;
         $scope.gameStarted = false;
 
@@ -80,21 +84,66 @@
                 }).Count();
             $scope.readyPlayers = connectedPlayers;
 
-            if (gameInfo.Companies != null) {
+            if (gameInfo.Started) {
+                //Players
+                gameInfo.Players.forEach(function (player) {
+                    var opponentsEnum = $linq.Enumerable().From(opponents);
+                    var existingOpponent = opponentsEnum.FirstOrDefault(null, 'x => x.PlayerPublicId == ' + player.PlayerPublicId);
+                    if (existingOpponent == null) {
+                        var actions = $linq.Enumerable().From(player.GameInfo.Actions)
+                            .GroupBy("$.Company", null,
+                                     function (key, g) {
+                                         return {
+                                             Company: key,
+                                             Count: g.Count()
+                                         }
+                                     })
+                            .ToArray();
+                        opponents.push({
+                            PlayerPublicId: player.PlayerPublicId,
+                            Type: player.Humain ? 'Humain' : 'Computer',
+                            Name: player.Name == null ? player.Email : player.Name,
+                            State: player.Connected ? 'Connected' : 'Waiting',
+                            Host: player.Host,
+                            Money: player.GameInfo.Money,
+                            Actions: actions
+                        });
+                    } else {
+                        existingOpponent.Type = player.Humain ? 'Humain' : 'Computer';
+                        existingOpponent.Name = player.Name == null ? player.Email : player.Name;
+                        existingOpponent.State = player.Connected ? 'Connected' : 'Waiting';
+                        existingOpponent.Host = player.Host;
+                        existingOpponent.Money = player.GameInfo.Money;
+                    }
+                });
+                //Personal
+                currentPlayer.Name = gameInfo.GameInfo.Name;
+                currentPlayer.Money = gameInfo.GameInfo.Money;
+                currentPlayer.Actions = gameInfo.GameInfo.Actions;
+                currentPlayer.Events = [];
+                //Global
+                //Companies
                 gameInfo.Companies.forEach(function (company) {
                     var companiesEnum = $linq.Enumerable().From(companies);
                     var existingCompany = companiesEnum.FirstOrDefault(null, 'x => x.Name == "' + company.Name + '"');
                     if (existingCompany == null) {
                         companies.push({
-                            Name: company.Name
+                            Name: company.Name,
+                            Money: company.Money,
+                            MarketShare: company.MarketShare,
+                            Manager: company.Manager,
+                            Ressources: company.RessourceDependencies
                         });
                     } else {
                         existingCompany.Name = company.Name;
+                        existingCompany.Money = company.Money;
+                        existingCompany.MarketShare = company.MarketShare;
+                        existingCompany.Manager = company.Manager;
+                        existingCompany.Ressources = company.RessourceDependencies;
                     }
                 });
             }
         }
-
 
         function refresh() {
             gameService.getGameInfo(playerToken, gameStateId)

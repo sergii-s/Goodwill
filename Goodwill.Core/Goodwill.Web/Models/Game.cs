@@ -7,7 +7,7 @@ namespace Goodwill.Web.Models
 {
     public class Game
     {
-        private static readonly string[] Comuters = { "Momo", "Alex", "Mathieu4f" };
+        private readonly Deck<string> Comuters = new List<string>{ "Julien", "Jeremie", "Momo", "Alex", "Mathieu4f" }.Shuffle();
 
         private Core.Goodwill _game;
         public IDictionary<string, Player> Players { get; set; }
@@ -36,7 +36,7 @@ namespace Goodwill.Web.Models
                 PlayerPublicId = Players.Count,
                 Connected = true,
                 Humain = false,
-                Name = Comuters.Random()
+                Name = Comuters.Pick()
             };
             AddSnapshotInfo();
         }
@@ -69,8 +69,12 @@ namespace Goodwill.Web.Models
                 if (Started)
                 {
                     var gameInfo = _game.GetGameInfo();
-                    gameInfoForPlayer.PrivateInfo = gameInfo.PlayersDictionary[Players[player.Key].Name];
+                    gameInfoForPlayer.GameInfo = gameInfo.PlayersDictionary[Players[player.Key].Name];
                     gameInfoForPlayer.Companies = gameInfo.Companies.Values.ToList();
+                    foreach (var playerPublicInfo in gameInfoForPlayer.Players)
+                    {
+                        playerPublicInfo.GameInfo = gameInfo.PlayersDictionary[playerPublicInfo.Name];
+                    }
                 }
                 Infos[player.Key].Add(gameInfoForPlayer);
             }
@@ -106,6 +110,7 @@ namespace Goodwill.Web.Models
         public bool Connected { get; set; }
         public bool Host { get; set; }
         public string Email { get; set; }
+        public PlayerInfo GameInfo { get; set; }
     }
 
     public class GameInfoForPlayer
@@ -115,6 +120,6 @@ namespace Goodwill.Web.Models
         public List<PlayerPublicInfo> Players { get; set; }
         public int GameStateId { get; set; }
         public List<CompanyInfo> Companies { get; set; }
-        public PlayerInfo PrivateInfo { get; set; }
+        public PlayerInfo GameInfo { get; set; }
     }
 }

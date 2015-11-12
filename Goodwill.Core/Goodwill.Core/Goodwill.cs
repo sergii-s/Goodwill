@@ -30,7 +30,7 @@ namespace Goodwill.Core
 
         public Deck<GameEvent> Events { get; set; }
 
-        public IDictionary<RessourceInfo, int> RessourcePrices { get; } = new Dictionary<RessourceInfo, int>();
+        public IDictionary<Ressource, int> RessourcePrices { get; } = new Dictionary<Ressource, int>();
 
         public GameState GameState { get; set; }
 
@@ -68,7 +68,15 @@ namespace Goodwill.Core
                     Name = x.Name,
                     Money = x.Money,
                     MarketShare = x.MarketShare,
-                    RessourceDependencies = x.RessourceDependencies
+                    Manager = x.Manager,
+                    RessourceDependencies = x.RessourceDependencies.Select((x1, i) =>
+                        new RessourceInfo
+                        {
+                            Index = i,
+                            Ressource = x1,
+                            RessourceName = x1.ToString()
+                        }
+                    ).ToList()
                 }).ToDictionary(x => x.Name, x => x),
                 Ressources = RessourcePrices.ToDictionary(x => x.Key, x => x.Value),
                 Players = Players.Select(x => new PlayerInfo
@@ -78,7 +86,8 @@ namespace Goodwill.Core
                     Actions = x.Actions.Select(s => new ActionInfo
                     {
                         Company = s.Company.Name
-                    }).ToList()
+                    }).ToList(),
+                    Events = x.Events
                 }).ToList(),
                 State = GameState
             };

@@ -16,13 +16,13 @@ namespace Goodwill.Core
         public int Money { get; set; }
         public int MarketShare { get; set; }
         public List<CompanyAction> Actions { get; set; }
-        public List<RessourceInfo> RessourceDependencies { get; set; }
+        public List<Ressource> RessourceDependencies { get; set; }
         public Manager Manager { get; set; }
     }
 
     public class Manager
     {
-        public Manager(string name, int bonus, bool dividends, int promotion, int optimisation, int innovation, RessourceInfo innovationFrom, RessourceInfo innovationTo)
+        public Manager(string name, int bonus, bool dividends, int promotion, int optimisation, int innovation, Ressource innovationFrom, Ressource innovationTo)
         {
             Name = name;
             Bonus = bonus;
@@ -40,7 +40,7 @@ namespace Goodwill.Core
         public int Promotion { get; }
         public int Optimisation { get; }
         public int Innovation { get; }
-        public RessourceInfo InnovationFrom { get; }
-        public RessourceInfo InnovationTo { get; }
+        public Ressource InnovationFrom { get; }
+        public Ressource InnovationTo { get; }
     }
 }

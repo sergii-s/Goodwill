@@ -16,7 +16,7 @@ namespace Goodwill.Core
             Years = 6;
             Companies = new[] { "Athena", "Mercury", "Jupiter" };
             MoneyByMarketPart = 1;
-            Ressources = new[] { RessourceInfo.Coal, RessourceInfo.Fuel, RessourceInfo.Employee };
+            Ressources = new[] { Ressource.Coal, Ressource.Fuel, Ressource.Employee };
             InitialRessourcePrice = 5;
             MinRessourcePrice = 5;
             MaxRessourcePrice = 25;
@@ -24,13 +24,13 @@ namespace Goodwill.Core
             {
                 Build.Manager
                     .Named("Helene")
-                    .WithInnovationLevel(2,RessourceInfo.Employee,RessourceInfo.Fuel)
+                    .WithInnovationLevel(2,Ressource.Employee,Ressource.Fuel)
                     .WithPromotionLevel(2)
                     .Create(),
                 Build.Manager
                     .Named("Gaston")
                     .WithBonus(5)
-                    .WithInnovationLevel(2,RessourceInfo.Employee,RessourceInfo.Coal)
+                    .WithInnovationLevel(2,Ressource.Employee,Ressource.Coal)
                     .WithOptimisationLevel(2)
                     .WithPromotionLevel(1)
                     .WithDividends()
@@ -57,24 +57,24 @@ namespace Goodwill.Core
                 Build.Manager
                     .Named("Edouard")
                     .WithBonus(5)
-                    .WithInnovationLevel(3,RessourceInfo.Fuel,RessourceInfo.Employee)
+                    .WithInnovationLevel(3,Ressource.Fuel,Ressource.Employee)
                     .WithPromotionLevel(2)
                     .Create(),
                 Build.Manager
                     .Named("Derek")
                     .WithBonus(10)
-                    .WithInnovationLevel(1,RessourceInfo.Coal,RessourceInfo.Employee)
+                    .WithInnovationLevel(1,Ressource.Coal,Ressource.Employee)
                     .WithPromotionLevel(3)
                     .Create(),
                 Build.Manager
                     .Named("Boris")
-                    .WithInnovationLevel(1,RessourceInfo.Fuel,RessourceInfo.Coal)
+                    .WithInnovationLevel(1,Ressource.Fuel,Ressource.Coal)
                     .WithOptimisationLevel(3)
                     .Create(),
                 Build.Manager
                     .Named("Francois")
                     .WithBonus(5)
-                    .WithInnovationLevel(3,RessourceInfo.Coal,RessourceInfo.Fuel)
+                    .WithInnovationLevel(3,Ressource.Coal,Ressource.Fuel)
                     .WithOptimisationLevel(1)
                     .WithPromotionLevel(1)
                     .Create(),
@@ -82,54 +82,54 @@ namespace Goodwill.Core
             Events = new[]
             {
                 Build.Event
-                    .PriceChange(RessourceInfo.Fuel, 10)
+                    .PriceChange(Ressource.Fuel, 10)
                     .Promotion(3)
                     .Create(),
                 Build.Event
                     .Promotion(3)
                     .Create(),
                 Build.Event
-                    .PriceChange(RessourceInfo.Coal, -10)
+                    .PriceChange(Ressource.Coal, -10)
                     .Optimisation(3)
                     .Create(),
                 Build.Event
-                    .RessourceBonus(RessourceInfo.Coal, 10)
+                    .RessourceBonus(Ressource.Coal, 10)
                     .Innovation(2, 3)
                     .Create(),
                 Build.Event
-                    .PriceChange(RessourceInfo.Fuel, -10)
+                    .PriceChange(Ressource.Fuel, -10)
                     .Optimisation(3)
                     .Create(),
                 Build.Event
-                    .PriceChange(RessourceInfo.Employee, 10)
+                    .PriceChange(Ressource.Employee, 10)
                     .Innovation(2)
                     .Create(),
                 Build.Event
-                    .RessourceBonus(RessourceInfo.Fuel, 10)
+                    .RessourceBonus(Ressource.Fuel, 10)
                     .Optimisation(1)
                     .Create(),
                 Build.Event
-                    .PriceChange(RessourceInfo.Coal, -5)
+                    .PriceChange(Ressource.Coal, -5)
                     .Innovation(2)
                     .Create(),
                 Build.Event
-                    .RessourceBonus(RessourceInfo.Employee, 10)
+                    .RessourceBonus(Ressource.Employee, 10)
                     .Promotion(3)
                     .Create(),
                 Build.Event
-                    .PriceChange(RessourceInfo.Coal, 10)
+                    .PriceChange(Ressource.Coal, 10)
                     .Optimisation(2)
                     .Create(),
                 Build.Event
-                    .PriceChange(RessourceInfo.Employee, -5)
+                    .PriceChange(Ressource.Employee, -5)
                     .Innovation(1,3)
                     .Create(),
                 Build.Event
-                    .PriceChange(RessourceInfo.Employee, 5)
+                    .PriceChange(Ressource.Employee, 5)
                     .Optimisation(3)
                     .Create(),
                 Build.Event
-                    .PriceChange(RessourceInfo.Fuel, -5)
+                    .PriceChange(Ressource.Fuel, -5)
                     .Promotion(1)
                     .Create(),
                 Build.Event
@@ -145,15 +145,15 @@ namespace Goodwill.Core
                     .Promotion(2)
                     .Create(),
                 Build.Event
-                    .PriceChange(RessourceInfo.Fuel, 5)
+                    .PriceChange(Ressource.Fuel, 5)
                     .Innovation(1)
                     .Create(),
                 Build.Event
-                    .PriceChange(RessourceInfo.Employee, -10)
+                    .PriceChange(Ressource.Employee, -10)
                     .Promotion(3)
                     .Create(),
                 Build.Event
-                    .PriceChange(RessourceInfo.Coal, 5)
+                    .PriceChange(Ressource.Coal, 5)
                     .Promotion(2)
                     .Create(),
                 Build.Event
@@ -165,15 +165,15 @@ namespace Goodwill.Core
                     .Innovation(3)
                     .Create(),
                 Build.Event
-                    .RessourceTax(RessourceInfo.Fuel, 10)
+                    .RessourceTax(Ressource.Fuel, 10)
                     .Innovation(2,3)
                     .Create(),
                 Build.Event
-                    .RessourceTax(RessourceInfo.Employee, 10)
+                    .RessourceTax(Ressource.Employee, 10)
                     .Innovation(2,3)
                     .Create(),
                 Build.Event
-                    .RessourceTax(RessourceInfo.Coal, 10)
+                    .RessourceTax(Ressource.Coal, 10)
                     .Promotion(2)
                     .Create(),
             };
@@ -228,7 +228,7 @@ namespace Goodwill.Core
         public int[] Percentages { get; }
         public int Years { get; }
         public int MoneyByMarketPart { get; }
-        public RessourceInfo[] Ressources { get; }
+        public Ressource[] Ressources { get; }
         public int MaxRessourcePrice { get; }
         public int MinRessourcePrice { get; }
         public int InitialRessourcePrice { get; }
