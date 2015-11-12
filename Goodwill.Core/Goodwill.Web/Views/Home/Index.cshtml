@@ -95,8 +95,8 @@
                     {{actionGroup.Company}} : {{actionGroup.Count}}
                 </div>
                 <div ng-repeat="gameEvent in currentPlayer.Events">
-                    {{gameEvent.Percentage}}%
-                    <div ng-repeat="gameEventAction in gameEvent.Actions">
+                    {{gameEvent.Probability}}%
+                    <div ng-repeat="gameEventAction in gameEvent.Action">
                         {{gameEventAction.Name}}
                     </div>
                 </div>

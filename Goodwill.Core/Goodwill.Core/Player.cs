@@ -10,7 +10,7 @@ namespace Goodwill.Core
         public int Money { get; set; }
 
         public List<CompanyAction> Actions { get; set; }
-        public List<GameEvent> Events { get; set; }
+        public List<GameEvent> Events { get; set; } = new List<GameEvent>();
     }
 
     public class CompanyAction

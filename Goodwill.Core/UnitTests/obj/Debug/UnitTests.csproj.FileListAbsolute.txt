@@ -31,16 +31,8 @@ C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\UnitTest
 C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\UnitTests.pdb
 C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\Goodwill.Core.dll
 C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\NFluent.dll
-C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\xunit.abstractions.dll
-C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\xunit.assert.dll
-C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\xunit.core.dll
 C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\Goodwill.Core.pdb
 C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\NFluent.xml
-C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\xunit.abstractions.xml
-C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\xunit.assert.pdb
-C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\xunit.assert.xml
-C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\xunit.core.pdb
-C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\xunit.core.xml
 C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\obj\Debug\UnitTests.csprojResolveAssemblyReference.cache
 C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\obj\Debug\UnitTests.dll
 C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\obj\Debug\UnitTests.pdb
@@ -62,3 +54,5 @@ C:\Development\sergii-s\Goodwill.Core\UnitTests\bin\Debug\xunit.core.xml
 C:\Development\sergii-s\Goodwill.Core\UnitTests\obj\Debug\UnitTests.csprojResolveAssemblyReference.cache
 C:\Development\sergii-s\Goodwill.Core\UnitTests\obj\Debug\UnitTests.dll
 C:\Development\sergii-s\Goodwill.Core\UnitTests\obj\Debug\UnitTests.pdb
+C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\nunit.framework.dll
+C:\Users\Sergii\Source\Repos\Goodwill\Goodwill.Core\UnitTests\bin\Debug\nunit.framework.xml

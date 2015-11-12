@@ -28,13 +28,14 @@ namespace Goodwill.Core
 
         public Deck<Manager> Managers { get; } = new Deck<Manager>();
 
-        public Deck<GameEvent> Events { get; set; }
+        public Deck<IGameEventAction> Events { get; set; }
+        public Deck<int> Probabilities { get; set; }
 
         public IDictionary<Ressource, int> RessourcePrices { get; } = new Dictionary<Ressource, int>();
 
         public GameState GameState { get; set; }
 
-        private IDictionary<string, int> _prices { get; set; }
+        private IDictionary<string, int> _playerBids { get; set; }
 
         public Player AddPlayer(string playerName)
         {
@@ -99,7 +100,7 @@ namespace Goodwill.Core
             {
                 throw new Exception();
             }
-            _prices[player] = price;
+            _playerBids[player] = price;
         }
 
         public void VoteManager(string player, string company, string manager)
@@ -112,18 +113,22 @@ namespace Goodwill.Core
 
         private void BeginYear()
         {
-            _gameInitializer.InitializeEvents(this, Config);
-            DistributeEvents();
+            TakeEvents();
             GameState = GameState.Pricing.Company(Config.CompanyEvaluatingOrderByYear[_currentYear].First());
-            _prices = new Dictionary<string, int>();
+            _playerBids = new Dictionary<string, int>();
         }
 
 
-        private void DistributeEvents()
+        private void TakeEvents()
         {
             foreach (var player in Players)
             {
-                player.Events = Events.Pick(2);
+                var toTakeEvents = Config.GameParametersByPlayersCount[Players.Count].EventsByPlayer;
+                for (var i = 0; i < toTakeEvents; i++)
+                {
+                    player.Events.Add(new GameEvent(Probabilities.Pick(), Events.Pick()));
+                    player.Events.Add(new GameEvent(Probabilities.Pick(), Events.Pick()));
+                }
             }
         }
 
@@ -131,7 +136,13 @@ namespace Goodwill.Core
         {
             ApplicateEvents();
             CalculateMoney();
+            PayCredits();
             _currentYear++;
+        }
+
+        private void PayCredits()
+        {
+            //TODO
         }
 
         private void CalculateMoney()
@@ -147,8 +158,9 @@ namespace Goodwill.Core
 
         private void ApplicateEvents()
         {
-            var events = Players.SelectMany(x => x.Events);
-            var eventToApply = events.OrderBy(x => x.Probability).Take(4);
+            var config = Config.GameParametersByPlayersCount[Players.Count];
+            var events = Players.SelectMany(x => x.Events.Pick().Take(config.EventsByPlayerYear));
+            var eventToApply = events.OrderBy(x => x.Probability).Take(config.EventsToApplicateInTheEndOfYear);
             foreach (var gameEvent in eventToApply)
             {
                 gameEvent.Action.Applicate(this);
@@ -159,18 +171,18 @@ namespace Goodwill.Core
         {
             if (Equals(GameState, GameState.Pricing))
             {
-                if (_prices.Count == Players.Count)
+                if (_playerBids.Count == Players.Count)
                 {
-                    var lowestPrice = _prices.Values.Min();
-                    var highestPrice = _prices.Values.Max();
+                    var lowestPrice = _playerBids.Values.Min();
+                    var highestPrice = _playerBids.Values.Max();
                     if (lowestPrice == highestPrice)
                     {
                         GameState = GameState.VotingForManager.Company(GameState.CurrentCompany);
                         return;
                     }
 
-                    var sellers = _prices.Where(x => x.Value == lowestPrice).ToList();
-                    var buyers = _prices.Where(x => x.Value == highestPrice).ToList();
+                    var sellers = _playerBids.Where(x => x.Value == lowestPrice).ToList();
+                    var buyers = _playerBids.Where(x => x.Value == highestPrice).ToList();
 
                     if (sellers.Count == buyers.Count)
                     {
@@ -180,7 +192,7 @@ namespace Goodwill.Core
                             var sellerPlayer = Players.First(x => x.Name == sellers[i].Key);
                             var buyerPlayer = Players.First(x => x.Name == buyers[i].Key);
 
-                            var action = sellerPlayer.Actions.Pick(x => x.Company.Name == GameState.CurrentCompany);
+                            var action = sellerPlayer.Actions.Pick(x => x.Company.Name == GameState.CurrentCompany).First();
                             sellerPlayer.Money += transactionPrice;
                             buyerPlayer.Actions.Add(action);
                             buyerPlayer.Money -= transactionPrice;

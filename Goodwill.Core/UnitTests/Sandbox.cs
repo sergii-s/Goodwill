@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Xunit;
+﻿using NUnit.Framework;
 
 namespace UnitTests
 {
     public class Sandbox
     {
-        [Fact]
+        [Test]
         public void GuidTypes()
         {
         }

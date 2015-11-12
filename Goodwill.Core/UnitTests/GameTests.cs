@@ -4,10 +4,11 @@ using System.Linq;
 using Goodwill.Core;
 using Goodwill.Core.Events;
 using NFluent;
-using Xunit;
+using NUnit.Framework;
 
 namespace UnitTests
 {
+    [TestFixture]
     public class GameTests
     {
         private static string _p1 = "Player 1";
@@ -16,8 +17,9 @@ namespace UnitTests
         private static string _p4 = "Player 4";
         private readonly string _athena = Constants.Athena;
         private readonly string _mercury = Constants.Mercury;
+        private readonly string _jupiter = Constants.Jupiter;
 
-        [Fact]
+        [Test]
         public void Default_config_for_companies()
         {
             var game = new Goodwill.Core.Goodwill(new DefaultGameParameters(), new TestGameInitializer());
@@ -31,7 +33,7 @@ namespace UnitTests
             Check.That(game.Companies.Extracting("MarketShare")).ContainsExactly(35, 35, 30);
             Check.That(game.Companies.Extracting("Money")).ContainsExactly(100, 100, 110);
             Check.That(game.Companies.Select(x => x.Manager).Extracting("Name"))
-                .ContainsExactly("Francois", "Derec", "Helene");
+                .ContainsExactly("Helene", "Gaston", "Alphonse");
             Check.That(player1.Money).IsEqualTo(20);
             Check.That(player1.Actions.Count).IsEqualTo(10);
             Check.That(player2.Money).IsEqualTo(20);
@@ -41,7 +43,7 @@ namespace UnitTests
         }
 
 
-        [Fact]
+        [Test]
         public void Default_config_for_players()
         {
             var game = new Goodwill.Core.Goodwill();
@@ -89,9 +91,10 @@ namespace UnitTests
                     : new List<Ressource>() { Ressource.Employee, Ressource.Employee, Ressource.Employee };
             }
 
-            public override void InitializeEvents(Goodwill.Core.Goodwill goodwill, IGameParameters config)
+            public override void InitializeEvents()
             {
-                goodwill.Events = config.Events.Select((x, i) => new GameEvent(i * 5, x)).ToDeck();
+                Goodwill.Events = Config.Events.ToDeck();
+                Goodwill.Probabilities = Config.Probabilities.ToDeck();
             }
 
             protected override void IntitializeManagers()
@@ -103,8 +106,7 @@ namespace UnitTests
             }
         }
 
-        [Fact]
-        //TODO fix random distribution
+        [Test]
         public void End_of_year()
         {
             var game = new Goodwill.Core.Goodwill(new DefaultGameParameters(), new TestGameInitializer());
@@ -123,17 +125,17 @@ namespace UnitTests
 
             Check.That(gameInfo1.Companies[_athena].Money).IsEqualTo(100);
             Check.That(gameInfo1.Companies[_athena].MarketShare).IsEqualTo(35);
-            Check.That(gameInfo1.Companies[_athena].RessourceDependencies)
+            Check.That(gameInfo1.Companies[_athena].RessourceDependencies.Select(x => x.Ressource))
                 .ContainsExactly(Ressource.Coal, Ressource.Coal, Ressource.Coal);
 
             Check.That(gameInfo1.Companies[_mercury].Money).IsEqualTo(100);
             Check.That(gameInfo1.Companies[_mercury].MarketShare).IsEqualTo(35);
-            Check.That(gameInfo1.Companies[_mercury].RessourceDependencies)
+            Check.That(gameInfo1.Companies[_mercury].RessourceDependencies.Select(x => x.Ressource))
                 .ContainsExactly(Ressource.Fuel, Ressource.Fuel, Ressource.Fuel);
-
-            Check.That(gameInfo1.Companies["Jupiter"].Money).IsEqualTo(110);
-            Check.That(gameInfo1.Companies["Jupiter"].MarketShare).IsEqualTo(30);
-            Check.That(gameInfo1.Companies["Jupiter"].RessourceDependencies)
+            
+            Check.That(gameInfo1.Companies[_jupiter].Money).IsEqualTo(110);
+            Check.That(gameInfo1.Companies[_jupiter].MarketShare).IsEqualTo(30);
+            Check.That(gameInfo1.Companies[_jupiter].RessourceDependencies.Select(x=>x.Ressource))
                 .ContainsExactly(Ressource.Employee, Ressource.Employee, Ressource.Employee);
 
             game.FinishYear();
@@ -143,17 +145,16 @@ namespace UnitTests
 
             Check.That(gameInfo2.Companies[_athena].Money).IsEqualTo(120);
             Check.That(gameInfo2.Companies[_mercury].Money).IsEqualTo(115);
-            Check.That(gameInfo2.Companies["Jupiter"].Money).IsEqualTo(115);
+            Check.That(gameInfo2.Companies[_jupiter].Money).IsEqualTo(115);
         }
-
-        [Theory]
-        [InlineData(-5, 5)]
-        [InlineData(0, 5)]
-        [InlineData(5, 10)]
-        [InlineData(10, 15)]
-        [InlineData(15, 20)]
-        [InlineData(20, 25)]
-        [InlineData(25, 25)]
+        
+        [TestCase(-5, 5)]
+        [TestCase(0, 5)]
+        [TestCase(5, 10)]
+        [TestCase(10, 15)]
+        [TestCase(15, 20)]
+        [TestCase(20, 25)]
+        [TestCase(25, 25)]
         public void Event_ressource_test(int move, int res)
         {
             var game = GameWithFourPlayers();
@@ -177,7 +178,7 @@ namespace UnitTests
         }
 
 
-        [Fact]
+        [Test]
         public void Evaluating_wrong_company()
         {
             var game = GameWithFourPlayers();
@@ -187,7 +188,7 @@ namespace UnitTests
             Check.ThatCode(() => game.SetPrice(_p1, _mercury, 100)).Throws<Exception>();
         }
 
-        [Fact]
+        [Test]
         public void Evaluating_same_price()
         {
             var game = GameWithFourPlayers();
@@ -205,7 +206,7 @@ namespace UnitTests
             Check.That(gameInfo2.State).IsEqualTo(GameState.VotingForManager.Company(_athena));
         }
 
-        [Fact]
+        [Test]
         public void Evaluating_one_transaction()
         {
             var game = GameWithFourPlayers();
@@ -226,7 +227,7 @@ namespace UnitTests
             Check.That(gameInfo2.PlayerMoney(_p4)).IsEqualTo(gameInfo.PlayerMoney(_p4) - 10);
         }
 
-        [Fact]
+        [Test]
         public void Evaluating_multiple_transaction()
         {
             var game = GameWithFourPlayers();

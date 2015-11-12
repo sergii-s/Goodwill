@@ -19,12 +19,14 @@ namespace Goodwill.Core
             InitializeRessources();
             InitializeMarketPart();
             InitializePlayers();
+            InitializeEvents();
             DistributeActions();
         }
 
-        public virtual void InitializeEvents(Goodwill goodwill, IGameParameters config)
+        public virtual void InitializeEvents()
         {
-            goodwill.Events = config.Events.Select(x => new GameEvent(5, x)).Shuffle();
+            Goodwill.Events = Config.Events.Shuffle();
+            Goodwill.Probabilities = Config.Probabilities.Shuffle();
         }
 
         protected virtual void IntitializeManagers()

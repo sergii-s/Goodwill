@@ -90,15 +90,6 @@
                     var opponentsEnum = $linq.Enumerable().From(opponents);
                     var existingOpponent = opponentsEnum.FirstOrDefault(null, 'x => x.PlayerPublicId == ' + player.PlayerPublicId);
                     if (existingOpponent == null) {
-                        var actions = $linq.Enumerable().From(player.GameInfo.Actions)
-                            .GroupBy("$.Company", null,
-                                     function (key, g) {
-                                         return {
-                                             Company: key,
-                                             Count: g.Count()
-                                         }
-                                     })
-                            .ToArray();
                         opponents.push({
                             PlayerPublicId: player.PlayerPublicId,
                             Type: player.Humain ? 'Humain' : 'Computer',
@@ -106,7 +97,7 @@
                             State: player.Connected ? 'Connected' : 'Waiting',
                             Host: player.Host,
                             Money: player.GameInfo.Money,
-                            Actions: actions
+                            Actions: transformActions(player.GameInfo.Actions)
                         });
                     } else {
                         existingOpponent.Type = player.Humain ? 'Humain' : 'Computer';
@@ -114,13 +105,14 @@
                         existingOpponent.State = player.Connected ? 'Connected' : 'Waiting';
                         existingOpponent.Host = player.Host;
                         existingOpponent.Money = player.GameInfo.Money;
+                        existingOpponent.Actions = transformActions(player.GameInfo.Actions);
                     }
                 });
                 //Personal
                 currentPlayer.Name = gameInfo.GameInfo.Name;
                 currentPlayer.Money = gameInfo.GameInfo.Money;
-                currentPlayer.Actions = gameInfo.GameInfo.Actions;
-                currentPlayer.Events = [];
+                currentPlayer.Actions = transformActions(gameInfo.GameInfo.Actions);
+                currentPlayer.Events = gameInfo.GameInfo.Events;
                 //Global
                 //Companies
                 gameInfo.Companies.forEach(function (company) {
@@ -143,6 +135,18 @@
                     }
                 });
             }
+        }
+
+        function transformActions(actions) {
+            return $linq.Enumerable().From(actions)
+                            .GroupBy("$.Company", null,
+                                     function (key, g) {
+                                         return {
+                                             Company: key,
+                                             Count: g.Count()
+                                         }
+                                     })
+                            .ToArray();
         }
 
         function refresh() {

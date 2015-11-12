@@ -9,6 +9,6 @@
         }
 
         public int Probability { get; }
-        public IGameEventAction Action { get;}
+        public IGameEventAction Action { get; }
     }
 }

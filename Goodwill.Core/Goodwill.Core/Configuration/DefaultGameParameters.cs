@@ -177,7 +177,7 @@ namespace Goodwill.Core
                     .Promotion(2)
                     .Create(),
             };
-            Percentages = new[]
+            Probabilities = new[]
             {
                 0,
                 5,
@@ -225,7 +225,7 @@ namespace Goodwill.Core
             };
         }
 
-        public int[] Percentages { get; }
+        public int[] Probabilities { get; }
         public int Years { get; }
         public int MoneyByMarketPart { get; }
         public Ressource[] Ressources { get; }

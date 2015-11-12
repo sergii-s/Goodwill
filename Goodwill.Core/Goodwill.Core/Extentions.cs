@@ -26,13 +26,25 @@ namespace Goodwill.Core
             }
         }
 
-        public static T Pick<T>(this List<T> items, Func<T,bool> check)
+        public static IEnumerable<T> Pick<T>(this List<T> items)
         {
-            var item = items.First(check);
-            items.Remove(item);
-            return item;
+            return items.Pick(arg => true);
         }
 
+        public static IEnumerable<T> Pick<T>(this List<T> items, Func<T,bool> check)
+        {
+            while (true)
+            {
+                var item = items.FirstOrDefault(check);
+                if (item == null)
+                {
+                    break;
+                }
+                items.Remove(item);
+                yield return item;
+            }
+        }
+        
         public static T Random<T>(this IEnumerable<T> items)
         {
             var itemsArray = items as T[] ?? items.ToArray();

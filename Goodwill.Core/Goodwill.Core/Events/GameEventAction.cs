@@ -11,6 +11,8 @@ namespace Goodwill.Core.Events
             _action = action;
         }
 
+        public string Name { get; set; }
+
         public void Applicate(Goodwill game)
         {
             _action(game);

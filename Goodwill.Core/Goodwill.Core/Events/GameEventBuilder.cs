@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Goodwill.Core.Events
 {
@@ -19,7 +20,10 @@ namespace Goodwill.Core.Events
                 newPrice = (newPrice > goodwill.Config.MaxRessourcePrice) ? goodwill.Config.MaxRessourcePrice : newPrice;
                 newPrice = (newPrice < goodwill.Config.MinRessourcePrice) ? goodwill.Config.MinRessourcePrice : newPrice;
                 goodwill.RessourcePrices[ressource] = newPrice;
-            }));
+            })
+            {
+                Name = $"Ressource{ressource}Price{priceChange}"
+            });
             return this;
         }
 
@@ -28,7 +32,10 @@ namespace Goodwill.Core.Events
             _actions.Add(new GameEventAction(goodwill =>
             {
                 //TODO
-            }));
+            })
+            {
+                Name = string.Join(",", i.Select(x => $"Promotion{x}"))
+            });
             return this;
         }
 
@@ -37,7 +44,10 @@ namespace Goodwill.Core.Events
             _actions.Add(new GameEventAction(goodwill =>
             {
                 //TODO
-            }));
+            })
+            {
+                Name = string.Join(",", i.Select(x => $"Innovation{x}"))
+            });
             return this;
         }
 
@@ -46,7 +56,10 @@ namespace Goodwill.Core.Events
             _actions.Add(new GameEventAction(goodwill =>
             {
                 //TODO
-            }));
+            })
+            {
+                Name = string.Join(",", i.Select(x=>$"Optimisation{x}"))
+            });
             return this;
         }
 
@@ -55,7 +68,10 @@ namespace Goodwill.Core.Events
             _actions.Add(new GameEventAction(goodwill =>
             {
                 //TODO
-            }));
+            })
+            {
+                Name = $"RessourceBonus{ressource}Bonus{i}"
+            });
             return this;
         }
 
@@ -64,7 +80,10 @@ namespace Goodwill.Core.Events
             _actions.Add(new GameEventAction(goodwill =>
             {
                 //TODO
-            }));
+            })
+            {
+                Name = $"RessourceTax{ressource}Tax{i}"
+            });
             return this;
         }
 
@@ -73,7 +92,10 @@ namespace Goodwill.Core.Events
             _actions.Add(new GameEventAction(goodwill =>
             {
                 //TODO
-            }));
+            })
+            {
+                Name = $"AllRessourcesPriceChange{i}"
+            });
             return this;
         }
 
@@ -82,7 +104,10 @@ namespace Goodwill.Core.Events
             _actions.Add(new GameEventAction(goodwill =>
             {
                 //TODO
-            }));
+            })
+            {
+                Name = $"Scandal{company}"
+            });
             return this;
         }
     }
