@@ -16,6 +16,8 @@ namespace Goodwill.Core
         {
             get { return Players.ToDictionary(x => x.Name, x => x); }
         }
+
+        public List<Manager> AvailableManagers { get; set; }
     }
 
     public class PlayerInfo

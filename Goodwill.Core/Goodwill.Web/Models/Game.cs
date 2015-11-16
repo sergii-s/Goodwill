@@ -71,6 +71,7 @@ namespace Goodwill.Web.Models
                     var gameInfo = _game.GetGameInfo();
                     gameInfoForPlayer.GameInfo = gameInfo.PlayersDictionary[Players[player.Key].Name];
                     gameInfoForPlayer.Companies = gameInfo.Companies.Values.ToList();
+                    gameInfoForPlayer.AvailableManagers = gameInfo.AvailableManagers;
                     foreach (var playerPublicInfo in gameInfoForPlayer.Players)
                     {
                         playerPublicInfo.GameInfo = gameInfo.PlayersDictionary[playerPublicInfo.Name];
