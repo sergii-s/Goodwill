@@ -21,9 +21,12 @@
         ];
         var companies = [];
         var opponents = [];
+        var availableManagers = [];
+        var ressources = [];
         var currentPlayer = {};
         var playerToken = '';
         var gameStateId = '';
+        var price = 10;
 
         gameService.initializeGame()
             .success(function (token) {
@@ -39,9 +42,13 @@
         $scope.players = players;
         $scope.opponents = opponents;
         $scope.companies = companies;
+        $scope.ressources = ressources;
+        $scope.availableManagers = availableManagers;
         $scope.currentPlayer = currentPlayer;
         $scope.readyPlayers = 1;
         $scope.gameStarted = false;
+        $scope.gameState = '';
+        $scope.price = price;
 
         $scope.addPlayer = function (playerEmail) {
             gameService.invitePlayer(playerToken, playerEmail);
@@ -53,6 +60,10 @@
 
         $scope.startGame = function () {
             gameService.startGame(playerToken);
+        };
+
+        $scope.setPrice = function () {
+            gameService.setPrice(playerToken, price);
         };
 
         function applicateGameInfo(gameInfo) {
@@ -114,6 +125,17 @@
                 currentPlayer.Actions = transformActions(gameInfo.GameInfo.Actions);
                 currentPlayer.Events = gameInfo.GameInfo.Events;
                 //Global
+                $scope.gameState = gameInfo.GameState;
+                updateByKey(ressources, gameInfo.Ressources, function (ressource) { return 'x=>x.RessourceName =="' + ressource.RessourceName + '"' });
+
+                for (var i = 0; i < gameInfo.AvailableManagers.length; i++) {
+                    if (availableManagers.length <= i) {
+                        availableManagers.push(gameInfo.AvailableManagers[i]);
+                    } else {
+                        availableManagers[i] = gameInfo.AvailableManagers[i];
+                    }
+                }
+
                 //Companies
                 gameInfo.Companies.forEach(function (company) {
                     var companiesEnum = $linq.Enumerable().From(companies);
@@ -135,6 +157,21 @@
                     }
                 });
             }
+        }
+
+
+
+        function updateByKey(targetArray, sourceArray, keySelector) {
+            var targetEnum = $linq.Enumerable().From(targetArray);
+
+            sourceArray.forEach(function (sourceItem) {
+                var existingItem = targetEnum.FirstOrDefault(null, keySelector(sourceItem));
+                if (existingItem == null) {
+                    targetArray.push(sourceItem);
+                } else {
+                    targetArray[targetArray.indexOf(existingItem)] = sourceItem;
+                }
+            });
         }
 
         function transformActions(actions) {
@@ -162,6 +199,7 @@
                     console.log('Get game info failed');
                 });
         }
+
     }
 
 })();

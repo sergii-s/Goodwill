@@ -30,6 +30,10 @@
             return $http.get("/api/game/info?token="+token+"&state="+gameStateId);
         }
 
+        gameService.setPrice = function (token, price) {
+            return $http.get("/api/game/setPrice?token=" + token + "&price=" + price);
+        }
+
         return gameService;
     }
 })();

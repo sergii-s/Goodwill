@@ -37,8 +37,22 @@
     </div>
     <div ng-if="gameStarted==true">
         <div class="row">
-            <div class="col-md-12">
-                <h2>Game in progress</h2>
+            {{gameState}}
+            <div class="col-md-12" ng-if="gameState.State=='Pricing'">
+                <h2>Pricing the company {{gameState.Company}}</h2>
+                <div class="input-group">
+                    <input type="text" ng-model="price" class="form-control" placeholder="Price for {{gameState.Company}}">
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="button" ng-click="setPrice()">Go!</button>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-12" ng-if="gameState.State=='ManagerChange'">
+                <h2>Vote for a manager for {{gameState.Company}}</h2>
+                <div class="list-group">
+                    <a href="#" class="list-group-item" ng-repeat="manager in availableManagers">{{manager.Name}}</a>
+                </div>
+                <button class="btn btn-default" type="button" ng-click="voteManagers()">Go!</button>
             </div>
         </div>
         <div class="row">
@@ -71,9 +85,16 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2 manager">Derek</div>
-            <div class="col-md-2 manager">Francois</div>
-            <div class="col-md-2 manager">Helene</div>
+            <div class="col-md-2 manager" ng-repeat="manager in availableManagers">
+                <h4>{{manager.Name}}</h4>
+                <div>Bonus : {{manager.Bonus}}</div>
+                <div>Innovation : {{manager.Innovation}}</div>
+                <div>from : {{manager.InnovationFrom}}</div>
+                <div>to : {{manager.InnovationTo}}</div>
+                <div>Optimisation : {{manager.Optimisation}}</div>
+                <div>Promotion : {{manager.Promotion}}</div>
+                <div>Dividends : {{manager.Dividends}}</div>
+            </div>
             <div class="col-md-2">
                 <div>Year 1 of 7</div>
                 <div>
@@ -82,23 +103,21 @@
             </div>
             <div class="col-md-4">
                 <div>Ressource prices</div>
-                <div>Coal : 10</div>
-                <div>Fuel : 10</div>
-                <div>Employee : 10</div>
+                <div ng-repeat="ressource in ressources">{{ressource.RessourceName}} : {{ressource.Price}}</div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-md-12 opponent">
+        <div class="row opponent">
+            <div class="col-md-2">
                 <div>{{currentPlayer.Name}}</div>
                 <div>{{currentPlayer.Money}}</div>
                 <div ng-repeat="actionGroup in currentPlayer.Actions">
                     {{actionGroup.Company}} : {{actionGroup.Count}}
                 </div>
-                <div ng-repeat="gameEvent in currentPlayer.Events">
-                    {{gameEvent.Probability}}%
-                    <div ng-repeat="gameEventAction in gameEvent.Action">
-                        {{gameEventAction.Name}}
-                    </div>
+            </div>
+            <div class="col-md-2" ng-repeat="gameEvent in currentPlayer.Events">
+                {{gameEvent.Probability}}%
+                <div ng-repeat="gameEventAction in gameEvent.Action">
+                    {{gameEventAction.Name}}
                 </div>
             </div>
         </div>

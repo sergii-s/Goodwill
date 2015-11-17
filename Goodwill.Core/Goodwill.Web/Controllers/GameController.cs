@@ -102,6 +102,20 @@ namespace Goodwill.Web.Controllers
             return game.Infos[playerToken.PlayerId].Where(x => x.GameStateId > latestStateId).ToList();
         }
 
+        [HttpGet]
+        public void SetPrice(string token, int price)
+        {
+            var playerToken = new Token(token);
+            new TokenValidator(playerToken)
+                .GameExists()
+                .Started()
+                .PlayerExists();
+
+            var game = Games[playerToken.GameId];
+
+            game.SetPrice(playerToken.PlayerId, price);
+        }
+
         // GET api/game
         public IEnumerable<string> Get()
         {
@@ -154,6 +168,16 @@ namespace Goodwill.Web.Controllers
                 {
                     throw new Exception("Not a host");
                 }
+            }
+
+            public TokenValidator Started()
+            {
+                var game = Games[_playerToken.GameId];
+                if (!game.Started)
+                {
+                    throw new Exception("The game is not yet started");
+                }
+                return this;
             }
         }
     }

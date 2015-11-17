@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Goodwill.Core;
 using Goodwill.Web.Controllers;
@@ -69,9 +70,20 @@ namespace Goodwill.Web.Models
                 if (Started)
                 {
                     var gameInfo = _game.GetGameInfo();
+                    gameInfoForPlayer.GameState = new GameStateInfo
+                    {
+                        State = gameInfo.State.State.ToString(),             
+                        Company = gameInfo.State.CurrentCompany             
+                    };
                     gameInfoForPlayer.GameInfo = gameInfo.PlayersDictionary[Players[player.Key].Name];
                     gameInfoForPlayer.Companies = gameInfo.Companies.Values.ToList();
                     gameInfoForPlayer.AvailableManagers = gameInfo.AvailableManagers;
+                    gameInfoForPlayer.Ressources = gameInfo.Ressources.Select(x => new PricedRessource
+                    {
+                        Ressource = x.Key,
+                        RessourceName = x.Key.ToString(),
+                        Price = x.Value
+                    }).ToList();
                     foreach (var playerPublicInfo in gameInfoForPlayer.Players)
                     {
                         playerPublicInfo.GameInfo = gameInfo.PlayersDictionary[playerPublicInfo.Name];
@@ -101,6 +113,23 @@ namespace Goodwill.Web.Models
             AddSnapshotInfo();
         }
 
+        public void SetPrice(string playerId, int price)
+        {
+            _game.SetPrice(Players[playerId].Name, _game.GameState.CurrentCompany, price);
+            //TODO on timeout with other players
+            foreach (var player in Players.Where(x=>x.Value.Humain==false))
+            {
+                _game.SetPrice(player.Value.Name, _game.GameState.CurrentCompany, 14);
+            }
+            _game.Next();
+            AddSnapshotInfo();
+        }
+    }
+
+    public class GameStateInfo
+    {
+        public string State { get; set; }
+        public string Company { get; set; }
     }
 
     public class PlayerPublicInfo
@@ -122,5 +151,15 @@ namespace Goodwill.Web.Models
         public int GameStateId { get; set; }
         public List<CompanyInfo> Companies { get; set; }
         public PlayerInfo GameInfo { get; set; }
+        public List<Manager> AvailableManagers { get; set; }
+        public List<PricedRessource> Ressources { get; set; }
+        public GameStateInfo GameState { get; set; }
+    }
+
+    public class PricedRessource
+    {
+        public Ressource Ressource { get; set; }
+        public string RessourceName { get; set; }
+        public int Price { get; set; }
     }
 }

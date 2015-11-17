@@ -35,6 +35,7 @@ namespace Goodwill.Core
             {
                 Goodwill.Managers.Enqueue(manager);
             }
+            Goodwill.AvailableManagers.AddRange(Goodwill.Managers.Pick(3));
         }
 
         private void InitializeRessources()

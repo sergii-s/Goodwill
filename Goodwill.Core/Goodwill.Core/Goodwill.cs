@@ -23,16 +23,12 @@ namespace Goodwill.Core
         }
 
         public List<Company> Companies { get; } = new List<Company>();
-
         public List<Player> Players { get; } = new List<Player>();
-
         public Deck<Manager> Managers { get; } = new Deck<Manager>();
-
+        public List<Manager> AvailableManagers { get; } = new List<Manager>();
         public Deck<IGameEventAction> Events { get; set; }
         public Deck<int> Probabilities { get; set; }
-
         public IDictionary<Ressource, int> RessourcePrices { get; } = new Dictionary<Ressource, int>();
-
         public GameState GameState { get; set; }
 
         private IDictionary<string, int> _playerBids { get; set; }
@@ -88,8 +84,9 @@ namespace Goodwill.Core
                     {
                         Company = s.Company.Name
                     }).ToList(),
-                    Events = x.Events
+                    Events = x.Events.ToList()
                 }).ToList(),
+                AvailableManagers = AvailableManagers.ToList(),
                 State = GameState
             };
         }
@@ -109,6 +106,7 @@ namespace Goodwill.Core
             {
                 throw new Exception();
             }
+            throw new NotImplementedException();
         }
 
         private void BeginYear()
@@ -142,7 +140,7 @@ namespace Goodwill.Core
 
         private void PayCredits()
         {
-            //TODO
+            throw new NotImplementedException();
         }
 
         private void CalculateMoney()
@@ -181,28 +179,34 @@ namespace Goodwill.Core
                         return;
                     }
 
+                    //TODO check they have actions
                     var sellers = _playerBids.Where(x => x.Value == lowestPrice).ToList();
-                    var buyers = _playerBids.Where(x => x.Value == highestPrice).ToList();
+                    var buyers = _playerBids.Where(x => x.Value == highestPrice).ToList().Shuffle();
 
-                    if (sellers.Count == buyers.Count)
+                    //if (sellers.Count == buyers.Count)
+                    //{
+                    foreach (var seller in sellers)
                     {
-                        for (int i = 0; i < sellers.Count; i++)
-                        {
-                            var transactionPrice = (lowestPrice + highestPrice) / 2;
-                            var sellerPlayer = Players.First(x => x.Name == sellers[i].Key);
-                            var buyerPlayer = Players.First(x => x.Name == buyers[i].Key);
+                        if (buyers.Count == 0) break;
+                        var buyer = buyers.Pick();
 
-                            var action = sellerPlayer.Actions.Pick(x => x.Company.Name == GameState.CurrentCompany).First();
-                            sellerPlayer.Money += transactionPrice;
-                            buyerPlayer.Actions.Add(action);
-                            buyerPlayer.Money -= transactionPrice;
-                        }
+                        var transactionPrice = (lowestPrice + highestPrice) / 2;
+                        var sellerPlayer = Players.First(x => x.Name == seller.Key);
+                        var buyerPlayer = Players.First(x => x.Name == buyer.Key);
+
+                        var action = sellerPlayer.Actions.Pick(x => x.Company.Name == GameState.CurrentCompany).First();
+                        sellerPlayer.Money += transactionPrice;
+                        buyerPlayer.Actions.Add(action);
+                        buyerPlayer.Money -= transactionPrice;
                     }
-                    else
-                    {
-                        GameState = GameState.ChoosingExchangePartner.Company(GameState.CurrentCompany);
-                        return;
-                    }
+                    GameState = GameState.VotingForManager.Company(GameState.CurrentCompany);
+                    return;
+                    //}
+                    //else
+                    //{
+                    //    GameState = GameState.ChoosingExchangePartner.Company(GameState.CurrentCompany);
+                    //    return;
+                    //}
                 }
                 else
                 {
@@ -213,6 +217,11 @@ namespace Goodwill.Core
             {
 
             }
+        }
+
+        public void TryContinue()
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -17,7 +17,7 @@ namespace Goodwill.Core
             Companies = new[] { "Athena", "Mercury", "Jupiter" };
             MoneyByMarketPart = 1;
             Ressources = new[] { Ressource.Coal, Ressource.Fuel, Ressource.Employee };
-            InitialRessourcePrice = 5;
+            InitialRessourcePrice = 10;
             MinRessourcePrice = 5;
             MaxRessourcePrice = 25;
             Managers = new List<Manager>
