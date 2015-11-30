@@ -1,0 +1,55 @@
+@font-face {
+	font-family: "Flaticon";
+	src: url("flaticon.eot");
+	src: url("flaticon.eot#iefix") format("embedded-opentype"),
+	url("flaticon.woff") format("woff"),
+	url("flaticon.ttf") format("truetype"),
+	url("flaticon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
+[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
+	font-family: Flaticon;
+        font-size: 20px;
+font-style: normal;
+margin-left: 20px;
+}.flaticon-arm2:before {
+	content: "\e000";
+}
+.flaticon-coins1:before {
+	content: "\e001";
+}
+.flaticon-earthglobe26:before {
+	content: "\e002";
+}
+.flaticon-email150:before {
+	content: "\e003";
+}
+.flaticon-gear39:before {
+	content: "\e004";
+}
+.flaticon-inspiration:before {
+	content: "\e005";
+}
+.flaticon-loudspeaker20:before {
+	content: "\e006";
+}
+.flaticon-mine2:before {
+	content: "\e007";
+}
+.flaticon-petrol3:before {
+	content: "\e008";
+}
+.flaticon-piechart2:before {
+	content: "\e009";
+}
+.flaticon-pie46:before {
+	content: "\e00a";
+}
+.flaticon-savings:before {
+	content: "\e00b";
+}
+.flaticon-stock7:before {
+	content: "\e00c";
+}

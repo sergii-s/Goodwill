@@ -66,34 +66,79 @@
         </div>
         <div class="row">
             <div class="col-md-4 company {{company.Name}}" ng-repeat="company in companies">
-                <h4>{{company.Name}}</h4>
-                <div>Money : {{company.Money}}</div>
-                <div>MarketShare : {{company.MarketShare}}</div>
-                <div class="manager">
-                    <h4>{{company.Manager.Name}}</h4>
-                    <div>Bonus : {{company.Manager.Bonus}}</div>
-                    <div>Innovation : {{company.Manager.Innovation}}</div>
-                    <div>from : {{company.Manager.InnovationFrom}}</div>
-                    <div>to : {{company.Manager.InnovationTo}}</div>
-                    <div>Optimisation : {{company.Manager.Optimisation}}</div>
-                    <div>Promotion : {{company.Manager.Promotion}}</div>
-                    <div>Dividends : {{company.Manager.Dividends}}</div>
-                </div>
-                <div ng-repeat="ressource in company.Ressources">
-                    {{ressource.RessourceName}}
-                </div>
+                <table style="width: 100%; height: 100%">
+                    <tr style="width: 100%">
+                        <td style="vertical-align: top">
+                            <h4>{{company.Name}}</h4>
+                            <div>Money : {{company.Money}}</div>
+                            <div>MarketShare : {{company.MarketShare}}</div>
+                        </td>
+                        <td>
+                            <div ng-repeat="ressource in company.Ressources">
+                                {{ressource.ressourceName}}
+                                <span ng-class="{'glyph-icon': true,'flaticon-mine2': ressource.ressource==0,'flaticon-arm2': ressource.ressource==1,'flaticon-petrol3': ressource.ressource==2}"></span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="manager {{company.Manager.Name|lowercase}}">
+                                <h4>{{company.Manager.Name}}</h4>
+                                <div>
+                                    <div style="vertical-align: top; float: left; padding: 5px">
+                                        <span ng-if="company.Manager.Innovation>0" ng-class="{'glyph-icon': true,'flaticon-mine2': company.Manager.InnovationTo==0,'flaticon-arm2': company.Manager.InnovationTo==1,'flaticon-petrol3': company.Manager.InnovationTo==2}"></span>
+                                    </div>
+                                    <div style="vertical-align: top; float: right; padding: 5px">
+                                        <span ng-if="company.Manager.Dividends==true" style="font-size: 20px; color: blanchedalmond;" class="glyph-icon flaticon-coins1"></span>
+                                    </div>
+                                </div>
+                                <table class="manager-param">
+                                    <tr ng-repeat="n in [3,2,1]">
+                                        <td>
+                                            <span ng-class="{'tranparent20': (n > company.Manager.Innovation)}" class="glyph-icon flaticon-inspiration"></span>
+                                        </td>
+                                        <td>
+                                            <span ng-class="{'tranparent20': (n > company.Manager.Optimisation)}" class="glyph-icon flaticon-gear39" />
+                                        </td>
+                                        <td>
+                                            <span ng-class="{'tranparent20': (n > company.Manager.Promotion)}" class="glyph-icon flaticon-email150"></span>
+                                        </td>
+                                        <td></td>
+                                        <td><span class="glyph-icon flaticon-savings" ng-if="n == 1">{{company.Manager.Bonus}}</span></td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
         <div class="row">
-            <div class="col-md-2 manager" ng-repeat="manager in availableManagers">
-                <h4>{{manager.Name}}</h4>
-                <div>Bonus : {{manager.Bonus}}</div>
-                <div>Innovation : {{manager.Innovation}}</div>
-                <div>from : {{manager.InnovationFrom}}</div>
-                <div>to : {{manager.InnovationTo}}</div>
-                <div>Optimisation : {{manager.Optimisation}}</div>
-                <div>Promotion : {{manager.Promotion}}</div>
-                <div>Dividends : {{manager.Dividends}}</div>
+            <div class="col-md-2" ng-repeat="manager in availableManagers">
+                <div class="manager {{manager.Name|lowercase}}">
+                    <h4>{{manager.Name}}</h4>
+                    <div>
+                        <div style="vertical-align: top; float: left;padding: 5px">
+                            <span ng-if="manager.Innovation>0" ng-class="{'glyph-icon': true,'flaticon-mine2': manager.InnovationTo==0,'flaticon-arm2': manager.InnovationTo==1,'flaticon-petrol3': manager.InnovationTo==2}"></span>
+                        </div>
+                        <div style="vertical-align: top; float: right;padding: 5px">
+                            <span ng-if="manager.Dividends==true" style="font-size: 20px; color: blanchedalmond;" class="glyph-icon flaticon-coins1"></span>
+                        </div>
+                    </div>
+                    <table class="manager-param">
+                        <tr ng-repeat="n in [3,2,1]">
+                            <td>
+                                <span ng-class="{'tranparent20': (n > manager.Innovation)}" class="glyph-icon flaticon-inspiration"></span>
+                            </td>
+                            <td>
+                                <span ng-class="{'tranparent20': (n > manager.Optimisation)}" class="glyph-icon flaticon-gear39" />
+                            </td>
+                            <td>
+                                <span ng-class="{'tranparent20': (n > manager.Promotion)}" class="glyph-icon flaticon-email150"></span>
+                            </td>
+                            <td></td>
+                            <td><span class="glyph-icon flaticon-savings" ng-if="n == 1">{{manager.Bonus}}</span></td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="col-md-2">
                 <div>Year 1 of 7</div>

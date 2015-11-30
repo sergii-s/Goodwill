@@ -66,6 +66,10 @@
             gameService.setPrice(playerToken, price);
         };
 
+        $scope.getNumber = function (num) {
+            return new Array(num);
+        }
+
         function applicateGameInfo(gameInfo) {
             $scope.gameStarted = gameInfo.Started;
             players[0].Name = gameInfo.Name;

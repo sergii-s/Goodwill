@@ -143,7 +143,21 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\flaticon.css" />
+    <Content Include="Content\images\alphonse.jpg" />
+    <Content Include="Content\images\athena.png" />
+    <Content Include="Content\images\boris.jpg" />
+    <Content Include="Content\images\colette.jpg" />
+    <Content Include="Content\images\derek.jpg" />
+    <Content Include="Content\images\edouard.jpg" />
+    <Content Include="Content\images\francois.jpeg" />
+    <Content Include="Content\images\gaston.jpeg" />
+    <Content Include="Content\images\helene.JPG" />
+    <Content Include="Content\images\ingrid.jpeg" />
+    <Content Include="Content\images\mercury.jpeg" />
+    <Content Include="Content\images\jupiter.gif" />
     <Content Include="favicon.ico" />
+    <Content Include="Content\flaticon.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Scripts\angular-linq.min.js" />
@@ -153,6 +167,9 @@
     <Content Include="Scripts\App\Services\gameService.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Content\flaticon.eot" />
+    <Content Include="Content\flaticon.ttf" />
+    <Content Include="Content\flaticon.woff" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
