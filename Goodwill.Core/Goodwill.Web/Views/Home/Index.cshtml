@@ -53,17 +53,18 @@
                     <a href="#" class="list-group-item" ng-repeat="manager in availableManagers">{{manager.Name}}</a>
                 </div>
                 <button class="btn btn-default" type="button" ng-click="voteManagers()">Go!</button>
-            </>
+            </div>
         </div>
         <div class="row">
             <div class="col-md-2 opponent" ng-repeat="opponent in opponents">
                 <div class="avatar"></div>
                 <div>{{opponent.Name}}</div>
-                <div>{{opponent.Money}}</div>
-                <div ng-repeat="actionGroup in opponent.Actions">
-                    <div class="action action-{{actionGroup.Company}}" ng-repeat="action in getNumber(actionGroup.Count) track by $index">
+                <div class="action-group" ng-repeat="actionGroup in opponent.Actions">
+                    <div class="action action-{{actionGroup.Company}}" ng-class="{'action-offset':$index>0, 'action-first':$index==0}" ng-repeat="action in getNumber(actionGroup.Count) track by $index">
                     </div>
+                    <b class="small-text action-count">{{actionGroup.Count}}</b>
                 </div>
+                <span class="glyph-icon flaticon-stock7">{{opponent.Money}}</span>
             </div>
         </div>
         <div class="row">
