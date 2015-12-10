@@ -146,6 +146,7 @@
     <Content Include="Content\flaticon.css" />
     <Content Include="Content\images\alphonse.jpg" />
     <Content Include="Content\images\athena.png" />
+    <Content Include="Content\images\athena_action.png" />
     <Content Include="Content\images\boris.jpg" />
     <Content Include="Content\images\colette.jpg" />
     <Content Include="Content\images\derek.jpg" />
@@ -154,8 +155,10 @@
     <Content Include="Content\images\gaston.jpeg" />
     <Content Include="Content\images\helene.JPG" />
     <Content Include="Content\images\ingrid.jpeg" />
+    <Content Include="Content\images\jupiter_action.png" />
     <Content Include="Content\images\mercury.jpeg" />
     <Content Include="Content\images\jupiter.gif" />
+    <Content Include="Content\images\mercury_action.png" />
     <Content Include="favicon.ico" />
     <Content Include="Content\flaticon.svg" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />

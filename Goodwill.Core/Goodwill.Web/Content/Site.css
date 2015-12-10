@@ -1,9 +1,23 @@
-﻿.opponent {
-    border-radius: 10px;
-    border: 1px solid #000000;
-    padding: 20px; 
-    margin-right: 20px; 
+﻿body {
+    margin-left: 15px;
 }
+.opponent {
+    padding: 20px;
+    margin-right: 20px;
+}
+
+.opponent .avatar {
+    width: 60px;
+    height: 60px;
+    background-size: 60px;
+    border-radius: 50px;
+    border: 1px solid #000000;
+    background-image: url(http://lorempixel.com/60/60/);
+    background-repeat: no-repeat;
+    float: left;
+    margin-right: 10px;
+}
+
 .manager {
     width: 200px;
     height: 260px;
@@ -16,26 +30,32 @@
     color: blanchedalmond;
     text-shadow: 0px 0px 6px #000000;
 }
+
 .manager-param {
     margin-top: 120px;
 }
-.manager .glyph-icon::before{
+
+.manager .glyph-icon::before {
     margin-left: 0px;
 }
-.manager-param td{
+
+.manager-param td {
     width: 60px;
     height: 30px;
     padding: 5px;
 }
+
 .manager:hover {
-    -webkit-box-shadow: 0px 10px 10px 1px rgba(0,0,0,0.75);
-    -moz-box-shadow: 0px 10px 10px 1px rgba(0,0,0,0.75);
-    box-shadow: 0px 10px 10px 1px rgba(0,0,0,0.75);
-    margin-top: -10px;
+    -webkit-box-shadow: 0px 4px 4px 1px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 4px 4px 1px rgba(0,0,0,0.75);
+    box-shadow: 0px 4px 4px 1px rgba(0,0,0,0.75);
+    margin-top: -4px;
 }
+
 .tranparent20 {
-    opacity: 0.1
+    opacity: 0.1;
 }
+
 .manager h4 {
     margin-top: 0px;
     margin-bottom: 0px;
@@ -44,47 +64,128 @@
     color: white;
     height: 25px;
 }
+
 .alphonse {
     background-image: url(images/alphonse.jpg);
 }
+
 .boris {
     background-image: url(images/boris.jpg);
 }
+
 .colette {
     background-image: url(images/colette.jpg);
 }
+
 .derek {
     background-image: url(images/derek.jpg);
 }
+
 .edouard {
     background-image: url(images/edouard.jpg);
 }
+
 .francois {
     background-image: url(images/francois.jpeg);
 }
+
 .gaston {
     background-image: url(images/gaston.jpeg);
 }
+
 .ingrid {
     background-image: url(images/ingrid.jpeg);
 }
+
 .helene {
     background-image: url(images/helene.jpg);
 }
+
 .company {
-    width: 400px;
+    width: 30%;
+    margin-right: 5px;
+    background-color: bisque;
+    float:left
+}
+
+.company .company-header {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 3px;
+    color: white;
+    height: 25px;
+}
+
+.Athena .company-header {
+    background-color: #6275ff;
+}
+
+.Jupiter .company-header {
+    background-color: #00bb83;
+}
+
+.Mercury .company-header {
+    background-color: #bb8a00;
+}
+
+.ressource {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
+    border: 3px solid #000000;
+    background-color: #000000;
+    padding: 3px;
+    margin: 3px;
+}
+
+.ressource .glyph-icon {
+    color: bisque;
+}
+
+.ressource .glyph-icon::before {
+    font-size: 20px;
+    margin-left: 4px;
+}
+
+.market-share {
+    width: 15px;
     height: 300px;
-    border-radius: 10px;
-    padding: 5px; 
-    margin-right: 5px; 
-    background-color: bisque
 }
-.Athena {
-    border: 10px solid #6275ff;
+.market-share tr{
+    line-height: 0px;
+    padding: 0px;
 }
-.Jupiter {
-    border: 10px solid #00bb83;
+.market-share td{
+    height: 10px;
+    line-height: 0px;
+    padding: 0px;
+    border: 1px solid #000000;
 }
-.Mercury {
-    border: 10px solid #bb8a00;
+
+.market-share td.active{
+    background-color: #0000cd;
+}
+
+.capital .glyph-icon::before {
+    font-size: 100px;
+}
+
+.action {
+    width: 20px;
+    height: 30px;
+    float: left;
+}
+
+.action-Athena {
+    background: url(images/actions.png);
+    background-position: 0px 900px;
+    background-size: 60px;
+}
+.action-Mercury {
+    background: url(images/actions.png);
+    background-position: 0px 180000px; 
+}
+.action-Jupiter {
+    background: url(images/actions.png);
+    background-position: 0px 0px; 
 }
