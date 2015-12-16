@@ -64,7 +64,7 @@
                     </div>
                     <b class="small-text action-count">{{actionGroup.Count}}</b>
                 </div>
-                <span class="glyph-icon flaticon-stock7">{{opponent.Money}}</span>
+                <span class="glyph-icon flaticon-coins36">{{opponent.Money}}</span>
             </div>
         </div>
         <div class="row">
@@ -80,7 +80,7 @@
                             </table>
                         </td>
                         <td style="vertical-align: top; width: 100%;align-items: center">
-                            <div class="capital"><span class="glyph-icon flaticon-stock7">{{company.Money}}</span></div>
+                            <div class="capital"><span class="glyph-icon flaticon-coins36">{{company.Money}}</span></div>
                         </td>
                         <td>
                             <div class="ressource" ng-repeat="ressource in company.Ressources">
@@ -95,7 +95,7 @@
                                         <span ng-if="company.Manager.Innovation>0" ng-class="{'glyph-icon': true,'flaticon-mine2': company.Manager.InnovationTo==0,'flaticon-arm2': company.Manager.InnovationTo==1,'flaticon-petrol3': company.Manager.InnovationTo==2}"></span>
                                     </div>
                                     <div style="vertical-align: top; float: right; padding: 5px">
-                                        <span ng-if="company.Manager.Dividends==true" style="font-size: 20px; color: blanchedalmond;" class="glyph-icon flaticon-coins1"></span>
+                                        <span ng-if="company.Manager.Dividends==true" style="font-size: 20px; color: blanchedalmond;" class="glyph-icon flaticon-payment7"></span>
                                     </div>
                                 </div>
                                 <table class="manager-param">
@@ -110,7 +110,7 @@
                                             <span ng-class="{'tranparent20': (n > company.Manager.Promotion)}" class="glyph-icon flaticon-email150"></span>
                                         </td>
                                         <td></td>
-                                        <td><span class="glyph-icon flaticon-savings" ng-if="n == 1">{{company.Manager.Bonus}}</span></td>
+                                        <td><span class="glyph-icon flaticon-savings1" ng-if="n == 1">{{company.Manager.Bonus}}</span></td>
                                     </tr>
                                 </table>
                             </div>
@@ -128,7 +128,7 @@
                             <span ng-if="manager.Innovation>0" ng-class="{'glyph-icon': true,'flaticon-mine2': manager.InnovationTo==0,'flaticon-arm2': manager.InnovationTo==1,'flaticon-petrol3': manager.InnovationTo==2}"></span>
                         </div>
                         <div style="vertical-align: top; float: right;padding: 5px">
-                            <span ng-if="manager.Dividends==true" style="font-size: 20px; color: blanchedalmond;" class="glyph-icon flaticon-coins1"></span>
+                            <span ng-if="manager.Dividends==true" style="font-size: 20px; color: blanchedalmond;" class="glyph-icon flaticon-payment7"></span>
                         </div>
                     </div>
                     <table class="manager-param">
@@ -143,7 +143,7 @@
                                 <span ng-class="{'tranparent20': (n > manager.Promotion)}" class="glyph-icon flaticon-email150"></span>
                             </td>
                             <td></td>
-                            <td><span class="glyph-icon flaticon-savings" ng-if="n == 1">{{manager.Bonus}}</span></td>
+                            <td><span class="glyph-icon flaticon-savings1" ng-if="n == 1">{{manager.Bonus}}</span></td>
                         </tr>
                     </table>
                 </div>

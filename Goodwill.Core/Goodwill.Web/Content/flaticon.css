@@ -17,39 +17,51 @@ margin-left: 20px;
 }.flaticon-arm2:before {
 	content: "\e000";
 }
-.flaticon-coins1:before {
+.flaticon-award52:before {
 	content: "\e001";
 }
-.flaticon-earthglobe26:before {
+.flaticon-boy3:before {
 	content: "\e002";
 }
-.flaticon-email150:before {
+.flaticon-businessman1:before {
 	content: "\e003";
 }
-.flaticon-gear39:before {
+.flaticon-coins36:before {
 	content: "\e004";
 }
-.flaticon-inspiration:before {
+.flaticon-email150:before {
 	content: "\e005";
 }
-.flaticon-loudspeaker20:before {
+.flaticon-emblem:before {
 	content: "\e006";
 }
-.flaticon-mine2:before {
+.flaticon-gear39:before {
 	content: "\e007";
 }
-.flaticon-petrol3:before {
+.flaticon-hand132:before {
 	content: "\e008";
 }
-.flaticon-piechart2:before {
+.flaticon-inspiration:before {
 	content: "\e009";
 }
-.flaticon-pie46:before {
+.flaticon-mine2:before {
 	content: "\e00a";
 }
-.flaticon-savings:before {
+.flaticon-money132:before {
 	content: "\e00b";
 }
-.flaticon-stock7:before {
+.flaticon-payment7:before {
 	content: "\e00c";
+}
+.flaticon-petrol3:before {
+	content: "\e00d";
+}
+.flaticon-piechart2:before {
+	content: "\e00e";
+}
+.flaticon-savings1:before {
+	content: "\e00f";
+}
+.flaticon-sell2:before {
+	content: "\e010";
 }
