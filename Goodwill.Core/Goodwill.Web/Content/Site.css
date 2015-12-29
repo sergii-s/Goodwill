@@ -1,6 +1,37 @@
 ﻿body {
     margin-left: 15px;
+    background: linear-gradient(0deg, #000000, #00415a);
+    background-size: 400% 400%;
+
+    -webkit-animation: backback 59s ease infinite;
+    -moz-animation: backback 59s ease infinite;
+    -o-animation: backback 59s ease infinite;
+    animation: backback 59s ease infinite;
 }
+
+
+@-webkit-keyframes backback {
+    0%{background-position:0% 41%}
+    50%{background-position:100% 60%}
+    100%{background-position:0% 41%}
+}
+@-moz-keyframes backback {
+    0%{background-position:0% 41%}
+    50%{background-position:100% 60%}
+    100%{background-position:0% 41%}
+}
+@-o-keyframes backback {
+    0%{background-position:0% 41%}
+    50%{background-position:100% 60%}
+    100%{background-position:0% 41%}
+}
+@keyframes backback { 
+    0%{background-position:0% 41%}
+    50%{background-position:100% 60%}
+    100%{background-position:0% 41%}
+}
+
+
 .opponent {
     padding: 20px;
     margin-right: 20px;
