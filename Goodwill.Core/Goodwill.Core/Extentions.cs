@@ -51,5 +51,15 @@ namespace Goodwill.Core
             var itemIdx = Rnd.Next(itemsArray.Length);
             return itemsArray[itemIdx];
         }
+
+        public static Player WithName(this IEnumerable<Player> players, string name)
+        {
+            return players.First(x => x.Name.Equals(name));
+        }
+
+        public static IEnumerable<CompanyAction> OfCompany(this IEnumerable<CompanyAction> actions, string companyName)
+        {
+            return actions.Where(x => x.Company.Name.Equals(companyName));
+        }
     }
 }

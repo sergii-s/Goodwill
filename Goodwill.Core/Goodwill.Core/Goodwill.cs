@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Goodwill.Core.Events;
+using Goodwill.Core.Rounds;
 
 namespace Goodwill.Core
 {
@@ -9,7 +10,8 @@ namespace Goodwill.Core
     {
         public IGameParameters Config { get; }
         private readonly IGameInitializer _gameInitializer;
-        private int _currentYear = 1;
+        private LinkedListNode<IGameRound> _currentRound;
+        public int CurrentYear = 0;
 
         public Goodwill()
             : this(new DefaultGameParameters(), new GameInitializer())
@@ -29,9 +31,8 @@ namespace Goodwill.Core
         public Deck<IGameEventAction> Events { get; set; }
         public Deck<int> Probabilities { get; set; }
         public IDictionary<Ressource, int> RessourcePrices { get; } = new Dictionary<Ressource, int>();
-        public GameState GameState { get; set; }
 
-        private IDictionary<string, int> _playerBids { get; set; }
+        private LinkedList<IGameRound> _gameRounds;
 
         public Player AddPlayer(string playerName)
         {
@@ -51,14 +52,15 @@ namespace Goodwill.Core
                 throw new Exception("Should be at least 2 players");
             }
             _gameInitializer.InitializeGame(this, Config);
-            BeginYear();
+            _gameRounds = new LinkedList<IGameRound>(AllGameRounds());
+            _currentRound = _gameRounds.First;
         }
 
         public GameInfo GetGameInfo()
         {
             return new GameInfo
             {
-                CurrentYear = _currentYear,
+                CurrentYear = CurrentYear,
                 TotalYears = Config.Years,
                 Companies = Companies.Select(x => new CompanyInfo
                 {
@@ -86,142 +88,31 @@ namespace Goodwill.Core
                     }).ToList(),
                     Events = x.Events.ToList()
                 }).ToList(),
-                AvailableManagers = AvailableManagers.ToList(),
-                State = GameState
+                AvailableManagers = AvailableManagers.ToList()
             };
         }
-
-        public void SetPrice(string player, string company, int price)
+        
+        public IGameRound NextRound()
         {
-            if (!Equals(GameState, GameState.Pricing.Company(company)))
-            {
-                throw new Exception();
-            }
-            _playerBids[player] = price;
+            _currentRound.Value.FinishRound();
+            _currentRound = _currentRound.Next;
+            return _currentRound.Value;
         }
 
-        public void VoteManager(string player, string company, string manager)
+        private IEnumerable<IGameRound> AllGameRounds()
         {
-            if (!Equals(GameState, GameState.VotingForManager.Company(company)))
+            for (var i = 0; i < Config.Years; i++)
             {
-                throw new Exception();
-            }
-            throw new NotImplementedException();
-        }
-
-        private void BeginYear()
-        {
-            TakeEvents();
-            GameState = GameState.Pricing.Company(Config.CompanyEvaluatingOrderByYear[_currentYear].First());
-            _playerBids = new Dictionary<string, int>();
-        }
-
-
-        private void TakeEvents()
-        {
-            foreach (var player in Players)
-            {
-                var toTakeEvents = Config.GameParametersByPlayersCount[Players.Count].EventsByPlayer;
-                for (var i = 0; i < toTakeEvents; i++)
+                yield return new BeginYearRound(this);
+                foreach (var company in Config.CompanyEvaluatingOrderByYear[i])
                 {
-                    player.Events.Add(new GameEvent(Probabilities.Pick(), Events.Pick()));
-                    player.Events.Add(new GameEvent(Probabilities.Pick(), Events.Pick()));
+                    yield return new BiddingRound(this, company);
+                    yield return new VoteManagerRound(this, company);
+                    yield return new BiddingRound(this, company);
                 }
+                yield return new EndYearRound(this);
             }
-        }
-
-        public void FinishYear()
-        {
-            ApplicateEvents();
-            CalculateMoney();
-            PayCredits();
-            _currentYear++;
-        }
-
-        private void PayCredits()
-        {
-            throw new NotImplementedException();
-        }
-
-        private void CalculateMoney()
-        {
-            foreach (var company in Companies)
-            {
-                var income = company.MarketShare * Config.MoneyByMarketPart;
-                var outcome = company.Manager.Bonus + company.RessourceDependencies.Sum(x => RessourcePrices[x]);
-                company.Money += income;
-                company.Money -= outcome;
-            }
-        }
-
-        private void ApplicateEvents()
-        {
-            var config = Config.GameParametersByPlayersCount[Players.Count];
-            var events = Players.SelectMany(x => x.Events.Pick().Take(config.EventsByPlayerYear));
-            var eventToApply = events.OrderBy(x => x.Probability).Take(config.EventsToApplicateInTheEndOfYear);
-            foreach (var gameEvent in eventToApply)
-            {
-                gameEvent.Action.Applicate(this);
-            }
-        }
-
-        public void Next()
-        {
-            if (Equals(GameState, GameState.Pricing))
-            {
-                if (_playerBids.Count == Players.Count)
-                {
-                    var lowestPrice = _playerBids.Values.Min();
-                    var highestPrice = _playerBids.Values.Max();
-                    if (lowestPrice == highestPrice)
-                    {
-                        GameState = GameState.VotingForManager.Company(GameState.CurrentCompany);
-                        return;
-                    }
-
-                    //TODO check they have actions
-                    var sellers = _playerBids.Where(x => x.Value == lowestPrice).ToList();
-                    var buyers = _playerBids.Where(x => x.Value == highestPrice).ToList().Shuffle();
-
-                    //if (sellers.Count == buyers.Count)
-                    //{
-                    foreach (var seller in sellers)
-                    {
-                        if (buyers.Count == 0) break;
-                        var buyer = buyers.Pick();
-
-                        var transactionPrice = (lowestPrice + highestPrice) / 2;
-                        var sellerPlayer = Players.First(x => x.Name == seller.Key);
-                        var buyerPlayer = Players.First(x => x.Name == buyer.Key);
-
-                        var action = sellerPlayer.Actions.Pick(x => x.Company.Name == GameState.CurrentCompany).First();
-                        sellerPlayer.Money += transactionPrice;
-                        buyerPlayer.Actions.Add(action);
-                        buyerPlayer.Money -= transactionPrice;
-                    }
-                    GameState = GameState.VotingForManager.Company(GameState.CurrentCompany);
-                    return;
-                    //}
-                    //else
-                    //{
-                    //    GameState = GameState.ChoosingExchangePartner.Company(GameState.CurrentCompany);
-                    //    return;
-                    //}
-                }
-                else
-                {
-                    throw new Exception("Not all players have set the price");
-                }
-            }
-            else
-            {
-
-            }
-        }
-
-        public void TryContinue()
-        {
-            throw new NotImplementedException();
+            yield return new EndGameRound(this);
         }
     }
 }

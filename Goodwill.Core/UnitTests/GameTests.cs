@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Goodwill.Core;
 using Goodwill.Core.Events;
+using Goodwill.Core.Rounds;
 using NFluent;
 using NUnit.Framework;
 
@@ -138,7 +139,7 @@ namespace UnitTests
             Check.That(gameInfo1.Companies[_jupiter].RessourceDependencies.Select(x=>x.Ressource))
                 .ContainsExactly(Ressource.Employee, Ressource.Employee, Ressource.Employee);
 
-            game.FinishYear();
+            var round = game.NextRound();
             var gameInfo2 = game.GetGameInfo();
             Check.That(gameInfo2.CurrentYear).IsEqualTo(2);
             Check.That(gameInfo2.TotalYears).IsEqualTo(6);
@@ -185,7 +186,9 @@ namespace UnitTests
 
             var gameInfo = game.GetGameInfo();
             Check.That(gameInfo.State).IsEqualTo(GameState.Pricing.Company(_athena));
-            Check.ThatCode(() => game.SetPrice(_p1, _mercury, 100)).Throws<Exception>();
+
+            var round = (BiddingRound)game.NextRound();
+            Check.ThatCode(() => round.SetPrice(_p1, _mercury, 100)).Throws<Exception>();
         }
 
         [Test]
@@ -199,7 +202,7 @@ namespace UnitTests
             game.SetPrice(_p2, _athena, 10);
             game.SetPrice(_p3, _athena, 10);
             game.SetPrice(_p4, _athena, 10);
-            game.Next();
+            game.NextRound();
 
             var gameInfo2 = game.GetGameInfo();
             //TODO check no transactions
@@ -216,7 +219,7 @@ namespace UnitTests
             game.SetPrice(_p2, _athena, 10);
             game.SetPrice(_p3, _athena, 10);
             game.SetPrice(_p4, _athena, 12);
-            game.Next();
+            game.NextRound();
 
             var gameInfo2 = game.GetGameInfo();
             Check.That(gameInfo2.State).IsEqualTo(GameState.Pricing.Company(_athena));
@@ -239,7 +242,7 @@ namespace UnitTests
             game.SetPrice(_p2, _athena, 8);
             game.SetPrice(_p3, _athena, 12);
             game.SetPrice(_p4, _athena, 12);
-            game.Next();
+            game.NextRound();
 
             var gameInfo2 = game.GetGameInfo();
 

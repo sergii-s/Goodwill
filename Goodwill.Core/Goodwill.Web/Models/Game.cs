@@ -121,7 +121,7 @@ namespace Goodwill.Web.Models
             {
                 _game.SetPrice(player.Value.Name, _game.GameState.CurrentCompany, 14);
             }
-            _game.Next();
+            _game.NextRound();
             AddSnapshotInfo();
         }
     }

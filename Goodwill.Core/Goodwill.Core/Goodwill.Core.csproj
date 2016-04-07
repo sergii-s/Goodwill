@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Rounds\BeginYearRound.cs" />
+    <Compile Include="Rounds\BiddingRound.cs" />
     <Compile Include="Build.cs" />
     <Compile Include="Company.cs" />
     <Compile Include="CompanyInfo.cs" />
@@ -57,15 +59,18 @@
     <Compile Include="Events\IGameEventAction.cs" />
     <Compile Include="IGameInitializer.cs" />
     <Compile Include="Configuration\IGameParameters.cs" />
+    <Compile Include="Rounds\EndGameRound.cs" />
+    <Compile Include="Rounds\EndYearRound.cs" />
+    <Compile Include="Rounds\IGameRound.cs" />
     <Compile Include="IGoodwill.cs" />
     <Compile Include="ManagerBuilder.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ressource.cs" />
+    <Compile Include="Rounds\VoteManagerRound.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Events\Implementations\" />
-    <Folder Include="Info\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
