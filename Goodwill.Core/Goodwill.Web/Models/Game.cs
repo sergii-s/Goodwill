@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Goodwill.Core;
+using Goodwill.Core.Rounds;
 using Goodwill.Web.Controllers;
 
 namespace Goodwill.Web.Models
 {
     public class Game
     {
+        private TimeSpan biddingTimeout = TimeSpan.FromMinutes(1);
+        private TimeSpan votingTimeout = TimeSpan.FromMinutes(1);
+
         private readonly Deck<string> Comuters = new List<string>{ "Julien", "Jeremie", "Momo", "Alex", "Mathieu4f" }.Shuffle();
 
         private Core.Goodwill _game;
@@ -113,16 +118,44 @@ namespace Goodwill.Web.Models
             AddSnapshotInfo();
         }
 
-        public void SetPrice(string playerId, int price)
+        private async void ContinueGame()
         {
-            _game.SetPrice(Players[playerId].Name, _game.GameState.CurrentCompany, price);
-            //TODO on timeout with other players
-            foreach (var player in Players.Where(x=>x.Value.Humain==false))
+            var currentRound = _game.CurrentRound;
+            if (currentRound is BiddingRound)
             {
-                _game.SetPrice(player.Value.Name, _game.GameState.CurrentCompany, 14);
+                await Task.Delay(biddingTimeout);
+            }
+            if (currentRound is VoteManagerRound)
+            {
+                await Task.Delay(votingTimeout);
             }
             _game.NextRound();
-            AddSnapshotInfo();
+        }
+
+        public void SetPrice(string playerId, int price)
+        {
+            var currentRound = _game.CurrentRound as BiddingRound;
+            if (currentRound != null)
+            {
+                currentRound.SetPrice(Players[playerId].Name, price);
+                AddSnapshotInfo();
+            }
+        }
+
+        public void VoteManager(string playerId, int price)
+        {
+            var currentRound = _game.CurrentRound as BiddingRound;
+            if (currentRound != null)
+            {
+                currentRound.SetPrice(Players[playerId].Name, price);
+                ////TODO on timeout with other players
+                //foreach (var player in Players.Where(x => x.Value.Humain == false))
+                //{
+                //    _game.SetPrice(player.Value.Name, _game.GameState.CurrentCompany, 14);
+                //}
+                //_game.NextRound();
+                AddSnapshotInfo();
+            }
         }
     }
 

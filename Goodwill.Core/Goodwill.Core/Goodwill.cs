@@ -31,6 +31,7 @@ namespace Goodwill.Core
         public Deck<IGameEventAction> Events { get; set; }
         public Deck<int> Probabilities { get; set; }
         public IDictionary<Ressource, int> RessourcePrices { get; } = new Dictionary<Ressource, int>();
+        public IGameRound CurrentRound => _currentRound.Value;
 
         private LinkedList<IGameRound> _gameRounds;
 
