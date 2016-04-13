@@ -89,7 +89,8 @@ namespace Goodwill.Core
                     }).ToList(),
                     Events = x.Events.ToList()
                 }).ToList(),
-                AvailableManagers = AvailableManagers.ToList()
+                AvailableManagers = AvailableManagers.ToList(),
+                GameState = _currentRound.Value.State
             };
         }
         
@@ -116,4 +117,11 @@ namespace Goodwill.Core
             yield return new EndGameRound(this);
         }
     }
+
+    public class GameState
+    {
+        public EGameRound Round { get; set; }
+        public string Company { get; set; }
+    }
+
 }

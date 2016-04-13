@@ -10,13 +10,13 @@ namespace Goodwill.Core
         public int TotalYears { get; set; }
         public Dictionary<string, CompanyInfo> Companies { get; set; }
         public Dictionary<Ressource, int> Ressources { get; set; }
-        public GameState State { get; set; }
         public List<PlayerInfo> Players { get; set; }
         public IDictionary<string, PlayerInfo> PlayersDictionary
         {
             get { return Players.ToDictionary(x => x.Name, x => x); }
         }
         public List<Manager> AvailableManagers { get; set; }
+        public GameState GameState { get; set; }
     }
 
     public class PlayerInfo

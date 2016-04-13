@@ -48,5 +48,7 @@ namespace Goodwill.Core.Rounds
                 buyerPlayer.Money -= transactionPrice;
             }
         }
+
+        public GameState State => new GameState {Round = EGameRound.Bidding, Company = _company};
     }
 }

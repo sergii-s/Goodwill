@@ -10,10 +10,10 @@ namespace Goodwill.Web.Models
 {
     public class Game
     {
-        private TimeSpan biddingTimeout = TimeSpan.FromMinutes(1);
-        private TimeSpan votingTimeout = TimeSpan.FromMinutes(1);
+        private readonly TimeSpan _biddingTimeout = TimeSpan.FromMinutes(1);
+        private readonly TimeSpan _votingTimeout = TimeSpan.FromMinutes(1);
 
-        private readonly Deck<string> Comuters = new List<string>{ "Julien", "Jeremie", "Momo", "Alex", "Mathieu4f" }.Shuffle();
+        private readonly Deck<string> _computers = new List<string>{ "Julien", "Jeremie", "Momo", "Alex", "Mathieu4f" }.Shuffle();
 
         private Core.Goodwill _game;
         public IDictionary<string, Player> Players { get; set; }
@@ -42,7 +42,7 @@ namespace Goodwill.Web.Models
                 PlayerPublicId = Players.Count,
                 Connected = true,
                 Humain = false,
-                Name = Comuters.Pick()
+                Name = _computers.Pick()
             };
             AddSnapshotInfo();
         }
@@ -77,8 +77,8 @@ namespace Goodwill.Web.Models
                     var gameInfo = _game.GetGameInfo();
                     gameInfoForPlayer.GameState = new GameStateInfo
                     {
-                        State = gameInfo.State.State.ToString(),             
-                        Company = gameInfo.State.CurrentCompany             
+                        State = gameInfo.GameState.Round.ToString(),
+                        Company = gameInfo.GameState.Company
                     };
                     gameInfoForPlayer.GameInfo = gameInfo.PlayersDictionary[Players[player.Key].Name];
                     gameInfoForPlayer.Companies = gameInfo.Companies.Values.ToList();
@@ -116,20 +116,27 @@ namespace Goodwill.Web.Models
             Started = true;
 
             AddSnapshotInfo();
+            ContinueGame().Start();
         }
 
-        private async void ContinueGame()
+        private async Task ContinueGame()
         {
             var currentRound = _game.CurrentRound;
             if (currentRound is BiddingRound)
             {
-                await Task.Delay(biddingTimeout);
+                await Task.Delay(_biddingTimeout);
             }
             if (currentRound is VoteManagerRound)
             {
-                await Task.Delay(votingTimeout);
+                await Task.Delay(_votingTimeout);
             }
             _game.NextRound();
+            AddSnapshotInfo();
+            if (_game.CurrentRound == null)
+            {
+                return;
+            }
+            await ContinueGame();
         }
 
         public void SetPrice(string playerId, int price)
@@ -148,12 +155,6 @@ namespace Goodwill.Web.Models
             if (currentRound != null)
             {
                 currentRound.SetPrice(Players[playerId].Name, price);
-                ////TODO on timeout with other players
-                //foreach (var player in Players.Where(x => x.Value.Humain == false))
-                //{
-                //    _game.SetPrice(player.Value.Name, _game.GameState.CurrentCompany, 14);
-                //}
-                //_game.NextRound();
                 AddSnapshotInfo();
             }
         }

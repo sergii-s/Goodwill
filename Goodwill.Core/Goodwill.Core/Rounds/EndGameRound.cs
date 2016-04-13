@@ -13,5 +13,7 @@ namespace Goodwill.Core.Rounds
         {
 
         }
+
+        public GameState State => new GameState { Round = EGameRound.EndGame };
     }
 }

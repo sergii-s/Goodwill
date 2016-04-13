@@ -52,18 +52,22 @@
 
         $scope.addPlayer = function (playerEmail) {
             gameService.invitePlayer(playerToken, playerEmail);
+            refresh();
         };
 
         $scope.addComputer = function () {
             gameService.addComputer(playerToken);
+            refresh();
         };
 
         $scope.startGame = function () {
             gameService.startGame(playerToken);
+            refresh();
         };
 
         $scope.setPrice = function () {
             gameService.setPrice(playerToken, price);
+            refresh();
         };
 
         $scope.getNumber = function (num) {

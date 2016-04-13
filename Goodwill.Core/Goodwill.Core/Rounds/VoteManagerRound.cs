@@ -22,8 +22,8 @@ namespace Goodwill.Core.Rounds
 
         private struct PlayerManagerVote
         {
-            private string _player;
-            private string _manager;
+            private readonly string _player;
+            private readonly string _manager;
 
             public PlayerManagerVote(string player, string manager)
             {
@@ -31,7 +31,7 @@ namespace Goodwill.Core.Rounds
                 _manager = manager;
             }
 
-            public bool Equals(PlayerManagerVote other)
+            private bool Equals(PlayerManagerVote other)
             {
                 return string.Equals(_player, other._player) && string.Equals(_manager, other._manager);
             }
@@ -46,7 +46,7 @@ namespace Goodwill.Core.Rounds
             {
                 unchecked
                 {
-                    return ((_player != null ? _player.GetHashCode() : 0)*397) ^ (_manager != null ? _manager.GetHashCode() : 0);
+                    return ((_player?.GetHashCode() ?? 0)*397) ^ (_manager?.GetHashCode() ?? 0);
                 }
             }
         }
@@ -55,5 +55,7 @@ namespace Goodwill.Core.Rounds
         {
             throw new System.NotImplementedException();
         }
+
+        public GameState State => new GameState { Round = EGameRound.VoteManager, Company = _company };
     }
 }

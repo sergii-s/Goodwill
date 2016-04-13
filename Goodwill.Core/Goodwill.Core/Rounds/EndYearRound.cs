@@ -20,6 +20,8 @@ namespace Goodwill.Core.Rounds
             _goodwill.CurrentYear++;
         }
 
+        public GameState State => new GameState { Round = EGameRound.EndYear };
+
 
         private void PayCredits()
         {

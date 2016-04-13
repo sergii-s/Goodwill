@@ -54,11 +54,11 @@
     <Compile Include="Events\GameEventBuilder.cs" />
     <Compile Include="GameInfo.cs" />
     <Compile Include="GameInitializer.cs" />
-    <Compile Include="GameState.cs" />
     <Compile Include="Goodwill.cs" />
     <Compile Include="Events\IGameEventAction.cs" />
     <Compile Include="IGameInitializer.cs" />
     <Compile Include="Configuration\IGameParameters.cs" />
+    <Compile Include="Rounds\EGameRound.cs" />
     <Compile Include="Rounds\EndGameRound.cs" />
     <Compile Include="Rounds\EndYearRound.cs" />
     <Compile Include="Rounds\IGameRound.cs" />
